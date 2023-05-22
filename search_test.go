@@ -23,6 +23,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -52,6 +53,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with limit", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -71,6 +73,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with offset", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
@@ -99,6 +102,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with sort", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
@@ -128,6 +132,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with sort desc", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,

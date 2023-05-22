@@ -28,6 +28,7 @@ func TestRepository_DeleteMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
+
 			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
@@ -62,7 +63,6 @@ func TestRepository_DeleteMany(t *testing.T) {
 
 	t.Run("error delete many with empty filters", func(t *testing.T) {
 		repo := newTestRepository(d)
-
 		_, err := repo.DeleteMany(context.Background(), newSearchFilters())
 
 		assert.Error(t, err)

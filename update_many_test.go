@@ -34,6 +34,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
+
 			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
@@ -83,6 +84,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
+
 			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
@@ -120,6 +122,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
+
 			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",

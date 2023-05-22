@@ -19,7 +19,7 @@ go get github.com/Drafteame/mgorepo
 
 ## Usage
 
-This package was made with the purpose of having a way to generify mongo actions using the repository pattern on a DDD
+This package was made with the purpose of have a way to generify mongo actions using the repository pattern on a DDD
 environment. It's not an ORM, it's just a way to have a generic way to interact with mongo.
 
 ### Main concepts
