@@ -24,6 +24,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
+
 			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
