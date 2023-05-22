@@ -1,15 +1,16 @@
 package mgorepo
 
 const (
-	actionCount      = "count"
-	actionCreate     = "create"
-	actionUpdate     = "update"
-	actionUpdateMany = "update_many"
-	actionDelete     = "delete"
-	actionDeleteMany = "delete_many"
-	actionHardDelete = "hard_delete"
-	actionGet        = "get"
-	actionSearch     = "search"
+	actionCount          = "count"
+	actionCreate         = "create"
+	actionUpdate         = "update"
+	actionUpdateMany     = "update_many"
+	actionDelete         = "delete"
+	actionDeleteMany     = "delete_many"
+	actionHardDelete     = "hard_delete"
+	actionHardDeleteMany = "hard_delete_many"
+	actionGet            = "get"
+	actionSearch         = "search"
 
 	buildSearchFilters = "build_search_filters"
 	buildSearchOptions = "build_search_options"
