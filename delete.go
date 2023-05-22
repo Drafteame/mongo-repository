@@ -2,7 +2,6 @@ package mgorepo
 
 import (
 	"context"
-	"errors"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -12,7 +11,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) Delete(ctx context.Context, id strin
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		r.logError(err, actionDelete, "error converting %s to ObjectID", id)
-		return 0, errors.Join(ErrInvalidIDFilter, err)
+		return 0, nil
 	}
 
 	filters := bson.D{
