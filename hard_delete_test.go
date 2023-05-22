@@ -22,8 +22,8 @@ func TestRepository_HardDelete(t *testing.T) {
 
 	t.Run("success hard delete", func(t *testing.T) {
 		repo := newTestRepository(d)
-
 		oid := primitive.NewObjectID()
+
 		dao := testDAO{
 			ID:         &oid,
 			Identifier: "test",
