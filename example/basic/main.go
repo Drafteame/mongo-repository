@@ -7,7 +7,6 @@ import (
 
 	"github.com/Drafteame/mgorepo"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/example/seed"
 )
 
 func main() {
@@ -16,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	if errSeed := seed.SeedCollection(collection, 100, d.Client().Database(d.DbName())); errSeed != nil {
+	if errSeed := Collection(collection, 100, d.Client().Database(d.DbName())); errSeed != nil {
 		panic(errSeed)
 	}
 
