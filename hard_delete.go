@@ -10,7 +10,7 @@ import (
 func (r Repository[M, D, SF, SO, UF]) HardDelete(ctx context.Context, id string) (int64, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		r.logError(err, actionHardDelete, "error converting %s to ObjectID", id)
+		r.logErrorf(err, actionHardDelete, "error converting %s to ObjectID", id)
 		return 0, nil
 	}
 
@@ -18,11 +18,11 @@ func (r Repository[M, D, SF, SO, UF]) HardDelete(ctx context.Context, id string)
 		{Key: "_id", Value: oid},
 	}
 
-	r.logDebug(actionHardDelete, "filters: %+v", filters)
+	r.logDebugf(actionHardDelete, "filters: %+v", filters)
 
 	res, deleteErr := r.Collection().DeleteOne(ctx, &filters)
 	if deleteErr != nil {
-		r.logError(deleteErr, actionHardDelete, "error deleting %s document", r.collectionName)
+		r.logErrorf(deleteErr, actionHardDelete, "error deleting %s document", r.collectionName)
 		return 0, deleteErr
 	}
 

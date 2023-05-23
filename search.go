@@ -10,7 +10,7 @@ import (
 func (r Repository[M, D, SF, SO, UF]) Search(ctx context.Context, opts SO) ([]M, error) {
 	filters, findOpts, err := r.BuildSearchOptions(opts)
 	if err != nil {
-		r.logError(err, actionSearch, "error building SearchOptions")
+		r.logErrorf(err, actionSearch, "error building SearchOptions")
 		return nil, err
 	}
 
@@ -24,12 +24,12 @@ func (r Repository[M, D, SF, SO, UF]) searchExecute(ctx context.Context, filters
 
 	cursor, errFind := r.Collection().Find(ctx, filters, findOptions)
 	if errFind != nil {
-		r.logError(errFind, actionSearch, "error searching %s", r.collectionName)
+		r.logErrorf(errFind, actionSearch, "error searching %s", r.collectionName)
 		return nil, errFind
 	}
 
 	if errDecode := cursor.All(ctx, &result); errDecode != nil {
-		r.logError(errDecode, actionSearch, "error decoding %s search result", r.collectionName)
+		r.logErrorf(errDecode, actionSearch, "error decoding %s search result", r.collectionName)
 		return nil, errDecode
 	}
 
@@ -37,7 +37,7 @@ func (r Repository[M, D, SF, SO, UF]) searchExecute(ctx context.Context, filters
 	for i, m := range result {
 		filler, ok := any(&m).(DaoFiller[M])
 		if !ok {
-			r.logError(ErrInvalidDaoFiller, actionSearch, "error getting DaoFiller from %s search result", r.collectionName)
+			r.logErrorf(ErrInvalidDaoFiller, actionSearch, "error getting DaoFiller from %s search result", r.collectionName)
 			return nil, ErrInvalidDaoFiller
 		}
 
@@ -63,5 +63,5 @@ func (r Repository[M, D, SF, SO, UF]) printSearchDebug(filters bson.D, findOpts 
 		}
 	}
 
-	r.logDebug(actionSearch, "filters: %+v sort: %+v skip: %+v limit: %+v", filters, shallowOpts.Sort, skip, limit)
+	r.logDebugf(actionSearch, "filters: %+v sort: %+v skip: %+v limit: %+v", filters, shallowOpts.Sort, skip, limit)
 }

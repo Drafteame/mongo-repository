@@ -10,7 +10,7 @@ func (r Repository[M, D, SF, SO, UF]) Count(ctx context.Context, opts SF) (int64
 		return 0, err
 	}
 
-	r.logDebug(actionCount, "filters: %+v", filters)
+	r.logDebugf(actionCount, "filters: %+v", filters)
 
 	return r.Collection().CountDocuments(ctx, filters)
 }

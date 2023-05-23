@@ -14,15 +14,15 @@ func (r Repository[M, D, SF, SO, UF]) UpdateMany(ctx context.Context, opts SF, d
 
 	update, err := r.updateData(data, false)
 	if err != nil {
-		r.logError(err, actionUpdateMany, "error updating %s document", r.collectionName)
+		r.logErrorf(err, actionUpdateMany, "error updating %s document", r.collectionName)
 		return 0, err
 	}
 
-	r.logDebug(actionUpdateMany, "filters: %+v data: %+v", filters, update)
+	r.logDebugf(actionUpdateMany, "filters: %+v data: %+v", filters, update)
 
 	res, err := r.Collection().UpdateMany(ctx, filters, update)
 	if err != nil {
-		r.logError(err, actionUpdateMany, "error updating %s documents", r.collectionName)
+		r.logErrorf(err, actionUpdateMany, "error updating %s documents", r.collectionName)
 		return 0, err
 	}
 
@@ -36,12 +36,12 @@ func (r Repository[M, D, SF, SO, UF]) updateManyFilters(opts SF) (bson.D, error)
 	}
 
 	if filters == nil {
-		r.logError(ErrEmptyFilters, actionUpdateMany, "error updating many %s document", r.collectionName)
+		r.logErrorf(ErrEmptyFilters, actionUpdateMany, "error updating many %s document", r.collectionName)
 		return nil, ErrEmptyFilters
 	}
 
 	if len(filters) == 1 && filters[0].Key == r.deletedAtField && filters[0].Value == nil {
-		r.logError(ErrEmptyFilters, actionUpdateMany, "error updating many %s document", r.collectionName)
+		r.logErrorf(ErrEmptyFilters, actionUpdateMany, "error updating many %s document", r.collectionName)
 		return nil, ErrEmptyFilters
 	}
 

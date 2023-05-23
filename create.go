@@ -16,17 +16,17 @@ func (r Repository[M, D, SF, SO, UF]) Create(ctx context.Context, model M) (M, e
 		return zeroM, err
 	}
 
-	r.logDebug(actionCreate, "data: %+v", data)
+	r.logDebugf(actionCreate, "data: %+v", data)
 
 	res, err := r.Collection().InsertOne(ctx, data)
 	if err != nil {
-		r.logError(err, actionCreate, "error inserting %s DAO", r.collectionName)
+		r.logErrorf(err, actionCreate, "error inserting %s DAO", r.collectionName)
 		return zeroM, err
 	}
 
 	data["_id"] = res.InsertedID
 
-	r.logDebug(actionCreate, "insertedId: %+v", res.InsertedID)
+	r.logDebugf(actionCreate, "insertedId: %+v", res.InsertedID)
 
 	resModel, err := r.createBuildModel(data)
 
@@ -58,7 +58,7 @@ func (r Repository[M, D, SF, SO, UF]) createBuildData(model M) (bson.M, error) {
 	dao := any(new(D)).(DaoFiller[M])
 
 	if errDao := dao.FromModel(model); errDao != nil {
-		r.logError(errDao, actionCreate, "error filling %s DAO", r.collectionName)
+		r.logErrorf(errDao, actionCreate, "error filling %s DAO", r.collectionName)
 		return bson.M{}, errors.Join(ErrCreatingDAO, errDao)
 	}
 

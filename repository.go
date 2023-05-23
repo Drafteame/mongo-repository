@@ -132,13 +132,13 @@ func (r Repository[M, D, SF, SO, UF]) WithTimestamps(withTimestamps bool) Reposi
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) logError(err error, action, message string, args ...any) {
+func (r Repository[M, D, SF, SO, UF]) logErrorf(err error, action, message string, args ...any) {
 	if r.log != nil && r.logLevel == logger.LevelError {
 		r.log.Errorf(err, action, message, args...)
 	}
 }
 
-func (r Repository[M, D, SF, SO, UF]) logDebug(action, message string, args ...any) {
+func (r Repository[M, D, SF, SO, UF]) logDebugf(action, message string, args ...any) {
 	if r.log != nil && r.logLevel == logger.LevelDebug {
 		r.log.Debugf(action, message, args...)
 	}

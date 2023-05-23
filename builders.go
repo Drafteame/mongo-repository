@@ -17,7 +17,7 @@ func (r Repository[M, D, SF, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error
 	for _, builder := range r.filterBuilders {
 		filter, err := builder(opts)
 		if err != nil {
-			r.logError(err, buildSearchFilters, "error building search filter for %s", r.collectionName)
+			r.logErrorf(err, buildSearchFilters, "error building search filter for %s", r.collectionName)
 			return nil, err
 		}
 
@@ -44,13 +44,13 @@ func (r Repository[M, D, SF, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error
 func (r Repository[M, D, SF, SO, UF]) BuildSearchOptions(opts SO) (bson.D, *options.FindOptions, error) {
 	bsonFilters, err := r.BuildSearchFilters(opts.GetFilters())
 	if err != nil {
-		r.logError(err, buildSearchOptions, "error building search filters for %s", r.collectionName)
+		r.logErrorf(err, buildSearchOptions, "error building search filters for %s", r.collectionName)
 		return nil, nil, err
 	}
 
 	bsonOrders, err := opts.GetOrders().Build()
 	if err != nil {
-		r.logError(err, buildSearchOptions, "error building search orders for %s", r.collectionName)
+		r.logErrorf(err, buildSearchOptions, "error building search orders for %s", r.collectionName)
 		return nil, nil, err
 	}
 
@@ -82,7 +82,7 @@ func (r Repository[M, D, SF, SO, UF]) BuildUpdateFields(fields UF) (bson.D, erro
 	for _, builder := range r.updateBuilders {
 		field, err := builder(fields)
 		if err != nil {
-			r.logError(err, buildUpdateFields, "error building update fields for %s", r.collectionName)
+			r.logErrorf(err, buildUpdateFields, "error building update fields for %s", r.collectionName)
 			return nil, err
 		}
 

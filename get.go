@@ -15,7 +15,7 @@ func (r Repository[M, D, SF, SO, UF]) Get(ctx context.Context, id string) (M, er
 
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		r.logError(err, actionGet, "invalid ObjectId %s", id)
+		r.logErrorf(err, actionGet, "invalid ObjectId %s", id)
 		return zeroM, errors.Join(ErrInvalidIDFilter, ErrNotFound, err)
 	}
 
@@ -24,28 +24,28 @@ func (r Repository[M, D, SF, SO, UF]) Get(ctx context.Context, id string) (M, er
 		{Key: r.deletedAtField, Value: nil},
 	}
 
-	r.logDebug(actionGet, "filters: %+v", filters)
+	r.logDebugf(actionGet, "filters: %+v", filters)
 
 	res := r.Collection().FindOne(ctx, filters)
 
 	if errRes := res.Err(); errRes != nil {
 		if errors.Is(errRes, mgo.ErrNoDocuments) {
-			r.logError(errRes, actionGet, "%s document not found by id %s", r.collectionName, id)
+			r.logErrorf(errRes, actionGet, "%s document not found by id %s", r.collectionName, id)
 			return zeroM, errors.Join(ErrNotFound, errRes)
 		}
 
-		r.logError(err, actionGet, "error getting %s document by id %s", r.collectionName, id)
+		r.logErrorf(err, actionGet, "error getting %s document by id %s", r.collectionName, id)
 		return zeroM, err
 	}
 
 	if errDecode := res.Decode(&dao); errDecode != nil {
-		r.logError(errDecode, actionGet, "error decoding %s document by id %s", r.collectionName, id)
+		r.logErrorf(errDecode, actionGet, "error decoding %s document by id %s", r.collectionName, id)
 		return zeroM, errDecode
 	}
 
 	filler, ok := any(&dao).(DaoFiller[M])
 	if !ok {
-		r.logError(ErrInvalidDaoFiller, actionGet, "error building model on get for %s in document id %s", r.collectionName, id)
+		r.logErrorf(ErrInvalidDaoFiller, actionGet, "error building model on get for %s in document id %s", r.collectionName, id)
 		return zeroM, ErrInvalidDaoFiller
 	}
 

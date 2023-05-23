@@ -11,21 +11,21 @@ import (
 func (r Repository[M, D, SF, SO, UF]) Update(ctx context.Context, id string, fields UF) (int64, error) {
 	filters, errFilters := r.updateFilters(id)
 	if errFilters != nil {
-		r.logError(errFilters, actionUpdate, "error updating %s document", r.collectionName)
+		r.logErrorf(errFilters, actionUpdate, "error updating %s document", r.collectionName)
 		return 0, nil
 	}
 
 	data, errData := r.updateData(fields, false)
 	if errData != nil {
-		r.logError(errData, actionUpdate, "error updating %s document", r.collectionName)
+		r.logErrorf(errData, actionUpdate, "error updating %s document", r.collectionName)
 		return 0, errData
 	}
 
-	r.logDebug(actionUpdate, "filters: %+v data: %+v", filters, data)
+	r.logDebugf(actionUpdate, "filters: %+v data: %+v", filters, data)
 
 	res, updateErr := r.Collection().UpdateOne(ctx, &filters, data)
 	if updateErr != nil {
-		r.logError(updateErr, actionUpdate, "error updating %s document", r.collectionName)
+		r.logErrorf(updateErr, actionUpdate, "error updating %s document", r.collectionName)
 		return 0, updateErr
 	}
 
