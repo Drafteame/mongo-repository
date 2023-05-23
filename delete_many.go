@@ -37,10 +37,5 @@ func (r Repository[M, D, SF, SO, UF]) deleteManyFilters(filters SF) (bson.D, err
 		return nil, err
 	}
 
-	if bf == nil {
-		r.logError(ErrEmptyFilters, actionDeleteMany, "error deleting many %s document", r.collectionName)
-		return nil, ErrEmptyFilters
-	}
-
 	return bf, nil
 }
