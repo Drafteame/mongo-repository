@@ -21,6 +21,7 @@ func main() {
 	}
 
 	searchExample(d)
+	searchAndSortExample(d)
 	searchOneExample(d)
 	getExample(d)
 	updateExample(d)
@@ -37,6 +38,29 @@ func searchExample(d mgorepo.Driver) {
 
 	opts := UserSearchOptions{
 		Filters: UserSearchFilters{GraterThanAge: &age},
+	}
+
+	users, errSearch := repo.Search(context.Background(), opts)
+	if errSearch != nil {
+		panic(errSearch)
+	}
+
+	for _, user := range users {
+		fmtPrintln(user)
+	}
+}
+
+func searchAndSortExample(d mgorepo.Driver) {
+	fmtPrintln("------ searchAndSortExample ------")
+
+	repo := NewUserRepository(d)
+
+	// Search users with age 21
+	age := 21
+
+	opts := UserSearchOptions{
+		Filters: UserSearchFilters{GraterThanAge: &age},
+		Orders:  mgorepo.NewSearchOrders().Add("age", mgorepo.OrderDesc),
 	}
 
 	users, errSearch := repo.Search(context.Background(), opts)

@@ -2,6 +2,11 @@ package mgorepo
 
 import "go.mongodb.org/mongo-driver/bson"
 
+const (
+	OrderAsc  = 1
+	OrderDesc = -1
+)
+
 type orderField struct {
 	Name  string
 	Order int
