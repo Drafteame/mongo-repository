@@ -31,13 +31,11 @@ type DaoFiller[M Model] interface {
 
 type SearchFilters any
 
-type SearchOrders any
-
 type UpdateFields any
 
-type SearchOptions[O SearchOrders, F SearchFilters] interface {
+type SearchOptions[F SearchFilters] interface {
 	GetLimit() int64
 	GetSkip() int64
-	GetOrders() O
+	GetOrders() SearchOrders
 	GetFilters() F
 }

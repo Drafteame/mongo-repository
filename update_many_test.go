@@ -12,8 +12,6 @@ import (
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	testoptions "github.com/Drafteame/mgorepo/testdata/domain/options"
-	testdaos "github.com/Drafteame/mgorepo/testdata/repository/daos"
 	ptesting "github.com/Drafteame/mgorepo/testing"
 )
 
@@ -36,7 +34,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
-			dao := testdaos.TestDAO{
+			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
@@ -46,8 +44,8 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := testoptions.NewSearchFilters().WithSortableGreaterThan(5)
-		data := testoptions.NewUpdateFields().WithIdentifier("test2")
+		filters := newSearchFilters().WithSortableGreaterThan(5)
+		data := newUpdateFields().WithIdentifier("test2")
 
 		repo := newTestRepository(d).SetClock(c)
 
@@ -61,7 +59,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.NoError(t, errUpdate)
 		assert.Equal(t, total, updated)
 
-		allDocs, errFind := repo.Search(context.Background(), testoptions.NewSearchOptions().WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), newSearchOptions().WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}
@@ -85,7 +83,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
-			dao := testdaos.TestDAO{
+			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
@@ -95,8 +93,8 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := testoptions.NewSearchFilters().WithSortableGreaterThan(5)
-		data := testoptions.NewUpdateFields()
+		filters := newSearchFilters().WithSortableGreaterThan(5)
+		data := newUpdateFields()
 
 		repo := newTestRepository(d).SetClock(c)
 		updated, errUpdate := repo.UpdateMany(context.Background(), filters, data)
@@ -105,7 +103,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.ErrorIs(t, errUpdate, ErrEmptyUpdate)
 		assert.Equal(t, int64(0), updated)
 
-		allDocs, errFind := repo.Search(context.Background(), testoptions.NewSearchOptions().WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), newSearchOptions().WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}
@@ -122,7 +120,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
-			dao := testdaos.TestDAO{
+			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
@@ -132,8 +130,8 @@ func TestRepository_UpdateMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := testoptions.NewSearchFilters()
-		data := testoptions.NewUpdateFields().WithIdentifier("test2")
+		filters := newSearchFilters()
+		data := newUpdateFields().WithIdentifier("test2")
 
 		repo := newTestRepository(d).SetClock(c)
 
@@ -143,7 +141,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.ErrorIs(t, errUpdate, ErrEmptyFilters)
 		assert.Equal(t, int64(0), updated)
 
-		allDocs, errFind := repo.Search(context.Background(), testoptions.NewSearchOptions().WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), newSearchOptions().WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}

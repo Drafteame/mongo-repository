@@ -9,7 +9,7 @@ import (
 	mgo "go.mongodb.org/mongo-driver/mongo"
 )
 
-func (r Repository[M, D, SF, SORD, SO, UF]) Get(ctx context.Context, id string) (M, error) {
+func (r Repository[M, D, SF, SO, UF]) Get(ctx context.Context, id string) (M, error) {
 	var dao D
 	var zeroM M
 

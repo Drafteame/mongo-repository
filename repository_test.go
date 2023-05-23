@@ -6,9 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/testdata/domain"
-	"github.com/Drafteame/mgorepo/testdata/domain/options"
-	"github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestNewRepository(t *testing.T) {
@@ -18,17 +15,15 @@ func TestNewRepository(t *testing.T) {
 	}
 
 	repository := NewRepository[
-		domain.TestModel,
-		daos.TestDAO,
-		options.SearchFilters,
-		options.SearchOrders,
-		options.SearchOptions,
-		options.UpdateFields,
+		testModel,
+		testDAO,
+		searchFilters,
+		searchOptions,
+		updateFields,
 	](
 		d,
 		collection,
 		getFilterBuilders(),
-		getOrderBuilders(),
 		getUpdateBuilders(),
 	)
 
@@ -36,6 +31,5 @@ func TestNewRepository(t *testing.T) {
 	assert.NotEmpty(t, repository.db, "db should not be empty")
 	assert.NotEmpty(t, repository.collectionName, "collectionName should not be empty")
 	assert.NotEmpty(t, repository.filterBuilders, "filterBuilders should not be empty")
-	assert.NotEmpty(t, repository.orderBuilders, "orderBuilders should not be empty")
 	assert.NotEmpty(t, repository.updateBuilders, "updateBuilders should not be empty")
 }

@@ -1,10 +1,10 @@
-package domain
+package mgorepo
 
 import (
 	"time"
 )
 
-type TestModel struct {
+type testModel struct {
 	ID         string
 	Identifier string
 	Sortable   int
@@ -12,5 +12,3 @@ type TestModel struct {
 	UpdatedAt  time.Time
 	DeletedAt  time.Time
 }
-
-// var _ repository.ModelSetter = (*TestModel)(nil)

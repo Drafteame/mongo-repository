@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r Repository[M, D, SF, SORD, SO, UF]) Create(ctx context.Context, model M) (M, error) {
+func (r Repository[M, D, SF, SO, UF]) Create(ctx context.Context, model M) (M, error) {
 	var zeroM M
 
 	data, err := r.createBuildData(model)
@@ -33,7 +33,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) Create(ctx context.Context, model M)
 	return resModel, err
 }
 
-func (r Repository[M, D, SF, SORD, SO, UF]) createBuildModel(data bson.M) (M, error) {
+func (r Repository[M, D, SF, SO, UF]) createBuildModel(data bson.M) (M, error) {
 	var zeroM M
 
 	dao := new(D)
@@ -54,7 +54,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) createBuildModel(data bson.M) (M, er
 	return filler.ToModel(), nil
 }
 
-func (r Repository[M, D, SF, SORD, SO, UF]) createBuildData(model M) (bson.M, error) {
+func (r Repository[M, D, SF, SO, UF]) createBuildData(model M) (bson.M, error) {
 	dao := any(new(D)).(DaoFiller[M])
 
 	if errDao := dao.FromModel(model); errDao != nil {

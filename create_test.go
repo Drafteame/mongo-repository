@@ -9,7 +9,6 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/testdata/domain"
 	ptesting "github.com/Drafteame/mgorepo/testing"
 )
 
@@ -21,7 +20,7 @@ func TestRepository_Create(t *testing.T) {
 
 	c := clock.NewTest(time.Now()).ForceUTC()
 
-	expected := domain.TestModel{
+	expected := testModel{
 		Identifier: "identifier",
 	}
 

@@ -10,7 +10,6 @@ import (
 
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	testdaos "github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestRepository_HardDelete(t *testing.T) {
@@ -25,7 +24,7 @@ func TestRepository_HardDelete(t *testing.T) {
 		repo := newTestRepository(d)
 
 		oid := primitive.NewObjectID()
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			ID:         &oid,
 			Identifier: "test",
 			Sortable:   randomNumber(),

@@ -12,8 +12,6 @@ import (
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	"github.com/Drafteame/mgorepo/testdata/domain"
-	"github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestRepository_Get(t *testing.T) {
@@ -28,7 +26,7 @@ func TestRepository_Get(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		dao := daos.TestDAO{
+		dao := testDAO{
 			ID:         &oid,
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -50,7 +48,7 @@ func TestRepository_Get(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		dao := daos.TestDAO{
+		dao := testDAO{
 			ID:         &oid,
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -73,7 +71,7 @@ func TestRepository_Get(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		dao := daos.TestDAO{
+		dao := testDAO{
 			ID:         &oid,
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -87,6 +85,6 @@ func TestRepository_Get(t *testing.T) {
 
 		assert.NotNil(t, model)
 		assert.NoError(t, err)
-		assert.IsType(t, domain.TestModel{}, model)
+		assert.IsType(t, testModel{}, model)
 	})
 }

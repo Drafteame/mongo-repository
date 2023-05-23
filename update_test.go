@@ -11,8 +11,6 @@ import (
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	"github.com/Drafteame/mgorepo/testdata/domain/options"
-	testdaos "github.com/Drafteame/mgorepo/testdata/repository/daos"
 	ptesting "github.com/Drafteame/mgorepo/testing"
 )
 
@@ -28,14 +26,14 @@ func TestRepository_Update(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			ID:         &oid,
 			Identifier: "test",
 		}
 
 		seed.InsertOne(t, db, collection, dao)
 
-		opts := options.NewUpdateFields().WithIdentifier("test2")
+		opts := newUpdateFields().WithIdentifier("test2")
 
 		repo := newTestRepository(d).SetClock(c)
 		affected, err := repo.Update(context.Background(), oid.Hex(), opts)
@@ -56,14 +54,14 @@ func TestRepository_Update(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			ID:         &oid,
 			Identifier: "test",
 		}
 
 		seed.InsertOne(t, db, collection, dao)
 
-		opts := options.NewUpdateFields()
+		opts := newUpdateFields()
 
 		repo := newTestRepository(d).SetClock(c)
 		_, err := repo.Update(context.Background(), oid.Hex(), opts)

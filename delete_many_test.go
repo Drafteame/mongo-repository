@@ -11,8 +11,6 @@ import (
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	testoptions "github.com/Drafteame/mgorepo/testdata/domain/options"
-	testdaos "github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestRepository_DeleteMany(t *testing.T) {
@@ -30,7 +28,7 @@ func TestRepository_DeleteMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
-			dao := testdaos.TestDAO{
+			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
@@ -40,7 +38,7 @@ func TestRepository_DeleteMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := testoptions.NewSearchFilters().WithSortableGreaterThan(50)
+		filters := newSearchFilters().WithSortableGreaterThan(50)
 
 		repo := newTestRepository(d).SetClock(c)
 
@@ -60,7 +58,7 @@ func TestRepository_DeleteMany(t *testing.T) {
 	t.Run("error delete many with empty filters", func(t *testing.T) {
 		repo := newTestRepository(d)
 
-		_, err := repo.DeleteMany(context.Background(), testoptions.NewSearchFilters())
+		_, err := repo.DeleteMany(context.Background(), newSearchFilters())
 
 		assert.Error(t, err)
 		assert.ErrorIs(t, err, ErrEmptyFilters)

@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-func (r Repository[M, D, SF, SORD, SO, UF]) Count(ctx context.Context, opts SF) (int64, error) {
+func (r Repository[M, D, SF, SO, UF]) Count(ctx context.Context, opts SF) (int64, error) {
 	filters, err := r.BuildSearchFilters(opts)
 	if err != nil {
 		return 0, err

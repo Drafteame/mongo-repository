@@ -1,8 +1,6 @@
 package mgorepo
 
 import (
-	"reflect"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -11,7 +9,7 @@ import (
 // the filters, or an error if one occurs. If no filters are given, it will return nil.
 // If the deletedAtField is not explicitly set, it will filter out deleted instances if
 // withTimestamps is set to true.
-func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error) {
+func (r Repository[M, D, SF, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error) {
 	filters := bson.D{}
 
 	deletedFilter := false
@@ -43,14 +41,14 @@ func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchFilters(opts SF) (bson.D,
 // BuildSearchOptions builds filters, and mongo.FindOptions from a SearchOptions struct.
 // If no limit is given, it will default to the repository's search limit. If no orders
 // are given, it will default to ascending order by id.
-func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOptions(opts SO) (bson.D, *options.FindOptions, error) {
+func (r Repository[M, D, SF, SO, UF]) BuildSearchOptions(opts SO) (bson.D, *options.FindOptions, error) {
 	bsonFilters, err := r.BuildSearchFilters(opts.GetFilters())
 	if err != nil {
 		r.logError(err, buildSearchOptions, "error building search filters for %s", r.collectionName)
 		return nil, nil, err
 	}
 
-	bsonOrders, err := r.BuildSearchOrders(opts.GetOrders())
+	bsonOrders, err := opts.GetOrders().Build()
 	if err != nil {
 		r.logError(err, buildSearchOptions, "error building search orders for %s", r.collectionName)
 		return nil, nil, err
@@ -75,35 +73,10 @@ func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOptions(opts SO) (bson.D,
 	return bsonFilters, findOpts, nil
 }
 
-// BuildSearchOrders builds the search orders from the given options and returns a bson.D
-// that can be used to sort the search results. If no orders are given, it will default to
-// ascending order by id.
-func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOrders(orders SORD) (bson.D, error) {
-	if reflect.DeepEqual(*new(SORD), orders) {
-		// default to ascending order by id
-		return bson.D{{Key: "_id", Value: 1}}, nil
-	}
-
-	bsonOrders := bson.D{}
-
-	for _, builder := range r.orderBuilders {
-		order, err := builder(orders)
-		if err != nil {
-			return nil, err
-		}
-
-		if order != nil {
-			bsonOrders = append(bsonOrders, *order)
-		}
-	}
-
-	return bsonOrders, nil
-}
-
 // BuildUpdateFields builds the update fields from the given options and returns a bson.D
 // that can be used to update the document. If repository is configured with timestamps, it
 // will automatically add the updatedAtField to the update fields.
-func (r Repository[M, D, SF, SORD, SO, UF]) BuildUpdateFields(fields UF) (bson.D, error) {
+func (r Repository[M, D, SF, SO, UF]) BuildUpdateFields(fields UF) (bson.D, error) {
 	bsonFields := bson.D{}
 
 	for _, builder := range r.updateBuilders {

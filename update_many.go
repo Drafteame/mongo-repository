@@ -6,7 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (r Repository[M, D, SF, SORD, SO, UF]) UpdateMany(ctx context.Context, opts SF, data UF) (int64, error) {
+func (r Repository[M, D, SF, SO, UF]) UpdateMany(ctx context.Context, opts SF, data UF) (int64, error) {
 	filters, err := r.updateManyFilters(opts)
 	if err != nil {
 		return 0, err
@@ -29,7 +29,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) UpdateMany(ctx context.Context, opts
 	return res.ModifiedCount, nil
 }
 
-func (r Repository[M, D, SF, SORD, SO, UF]) updateManyFilters(opts SF) (bson.D, error) {
+func (r Repository[M, D, SF, SO, UF]) updateManyFilters(opts SF) (bson.D, error) {
 	filters, err := r.BuildSearchFilters(opts)
 	if err != nil {
 		return nil, err

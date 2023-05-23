@@ -1,12 +1,10 @@
-package daos
+package mgorepo
 
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
-
-	"github.com/Drafteame/mgorepo/testdata/domain"
 )
 
-type TestDAO struct {
+type testDAO struct {
 	ID         *primitive.ObjectID `bson:"_id,omitempty"`
 	Sortable   int                 `bson:"sortable"`
 	Identifier string              `bson:"identifier"`
@@ -15,10 +13,10 @@ type TestDAO struct {
 	DeletedAt  primitive.DateTime  `bson:"deletedAt,omitempty"`
 }
 
-// var _ mgorepo.DaoFiller[domain.TestModel] = (*TestDAO)(nil)
+var _ DaoFiller[testModel] = (*testDAO)(nil)
 
-func (d *TestDAO) ToModel() domain.TestModel {
-	return domain.TestModel{
+func (d *testDAO) ToModel() testModel {
+	return testModel{
 		ID:         d.ID.Hex(),
 		Identifier: d.Identifier,
 		Sortable:   d.Sortable,
@@ -28,7 +26,7 @@ func (d *TestDAO) ToModel() domain.TestModel {
 	}
 }
 
-func (d *TestDAO) FromModel(m domain.TestModel) error {
+func (d *testDAO) FromModel(m testModel) error {
 	if m.ID != "" {
 		id, err := primitive.ObjectIDFromHex(m.ID)
 		if err != nil {

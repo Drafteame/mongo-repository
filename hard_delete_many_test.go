@@ -9,8 +9,6 @@ import (
 
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	testoptions "github.com/Drafteame/mgorepo/testdata/domain/options"
-	testdaos "github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestRepository_HardDeleteMany(t *testing.T) {
@@ -26,7 +24,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
-			dao := testdaos.TestDAO{
+			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
@@ -36,7 +34,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := testoptions.NewSearchFilters().WithSortableGreaterThan(50)
+		filters := newSearchFilters().WithSortableGreaterThan(50)
 
 		repo := newTestRepository(d)
 
@@ -63,7 +61,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 	t.Run("error hard delete many with empty filters", func(t *testing.T) {
 		repo := newTestRepository(d)
 
-		deleted, err := repo.HardDeleteMany(context.Background(), testoptions.NewSearchFilters())
+		deleted, err := repo.HardDeleteMany(context.Background(), newSearchFilters())
 
 		assert.Equal(t, int64(0), deleted)
 		assert.Error(t, err)
@@ -75,7 +73,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
-			dao := testdaos.TestDAO{
+			dao := testDAO{
 				ID:         &oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
@@ -85,7 +83,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := testoptions.NewSearchFilters().WithSortableGreaterThan(1000)
+		filters := newSearchFilters().WithSortableGreaterThan(1000)
 
 		repo := newTestRepository(d)
 
@@ -94,7 +92,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 		assert.Equal(t, int64(0), deleted)
 		assert.NoError(t, err)
 
-		total, err := repo.Count(context.Background(), testoptions.NewSearchFilters())
+		total, err := repo.Count(context.Background(), newSearchFilters())
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -10,8 +10,6 @@ import (
 
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	testoptions "github.com/Drafteame/mgorepo/testdata/domain/options"
-	testdaos "github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestRepository_Search(t *testing.T) {
@@ -24,7 +22,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search", func(t *testing.T) {
 		now := time.Now().UTC()
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
 			UpdatedAt:  primitive.NewDateTimeFromTime(now),
@@ -34,7 +32,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions()
+		opt := newSearchOptions()
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -44,7 +42,7 @@ func TestRepository_Search(t *testing.T) {
 	t.Run("empty search", func(t *testing.T) {
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions()
+		opt := newSearchOptions()
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -53,7 +51,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with limit", func(t *testing.T) {
 		now := time.Now().UTC()
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
 			UpdatedAt:  primitive.NewDateTimeFromTime(now),
@@ -63,7 +61,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions().WithLimit(1)
+		opt := newSearchOptions().WithLimit(1)
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -72,14 +70,14 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with offset", func(t *testing.T) {
 		now := time.Now().UTC()
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
 			UpdatedAt:  primitive.NewDateTimeFromTime(now),
 		}
 
-		dao2 := testdaos.TestDAO{
+		dao2 := testDAO{
 			Identifier: "identifier",
 			Sortable:   2,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -90,7 +88,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions().WithSkip(1)
+		opt := newSearchOptions().WithSkip(1)
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -100,14 +98,14 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with sort", func(t *testing.T) {
 		now := time.Now().UTC()
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
 			UpdatedAt:  primitive.NewDateTimeFromTime(now),
 		}
 
-		dao2 := testdaos.TestDAO{
+		dao2 := testDAO{
 			Identifier: "identifier",
 			Sortable:   2,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -118,7 +116,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions().WithSortSorter(1)
+		opt := newSearchOptions().WithOrder(sortableField, 1)
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -129,14 +127,14 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with sort desc", func(t *testing.T) {
 		now := time.Now().UTC()
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
 			UpdatedAt:  primitive.NewDateTimeFromTime(now),
 		}
 
-		dao2 := testdaos.TestDAO{
+		dao2 := testDAO{
 			Identifier: "identifier",
 			Sortable:   2,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -147,7 +145,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions().WithSortSorter(-1)
+		opt := newSearchOptions().WithOrder(sortableField, -1)
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -160,14 +158,14 @@ func TestRepository_Search(t *testing.T) {
 		now := time.Now().UTC()
 		pnow := primitive.NewDateTimeFromTime(now)
 
-		dao := testdaos.TestDAO{
+		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
 			UpdatedAt:  primitive.NewDateTimeFromTime(now),
 		}
 
-		dao2 := testdaos.TestDAO{
+		dao2 := testDAO{
 			Identifier: "identifier",
 			Sortable:   2,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -179,7 +177,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := testoptions.NewSearchOptions()
+		opt := newSearchOptions()
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)

@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r Repository[M, D, SF, SORD, SO, UF]) Search(ctx context.Context, opts SO) ([]M, error) {
+func (r Repository[M, D, SF, SO, UF]) Search(ctx context.Context, opts SO) ([]M, error) {
 	filters, findOpts, err := r.BuildSearchOptions(opts)
 	if err != nil {
 		r.logError(err, actionSearch, "error building SearchOptions")
@@ -17,7 +17,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) Search(ctx context.Context, opts SO)
 	return r.searchExecute(ctx, filters, findOpts)
 }
 
-func (r Repository[M, D, SF, SORD, SO, UF]) searchExecute(ctx context.Context, filters bson.D, findOptions *options.FindOptions) ([]M, error) {
+func (r Repository[M, D, SF, SO, UF]) searchExecute(ctx context.Context, filters bson.D, findOptions *options.FindOptions) ([]M, error) {
 	var result []D
 
 	r.printSearchDebug(filters, findOptions)
@@ -47,7 +47,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) searchExecute(ctx context.Context, f
 	return models, nil
 }
 
-func (r Repository[M, D, SF, SORD, SO, UF]) printSearchDebug(filters bson.D, findOpts *options.FindOptions) {
+func (r Repository[M, D, SF, SO, UF]) printSearchDebug(filters bson.D, findOpts *options.FindOptions) {
 	var shallowOpts options.FindOptions
 	var skip, limit int64
 

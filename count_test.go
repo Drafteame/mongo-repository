@@ -8,8 +8,6 @@ import (
 
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	"github.com/Drafteame/mgorepo/testdata/domain/options"
-	"github.com/Drafteame/mgorepo/testdata/repository/daos"
 )
 
 func TestRepository_Count(t *testing.T) {
@@ -20,9 +18,9 @@ func TestRepository_Count(t *testing.T) {
 
 	db := d.Client().Database(d.DbName())
 
-	seed.InsertOne(t, db, collection, daos.TestDAO{})
+	seed.InsertOne(t, db, collection, testDAO{})
 
-	opt := options.NewSearchFilters()
+	opt := newSearchFilters()
 	repo := newTestRepository(d)
 	count, err := repo.Count(context.Background(), opt)
 

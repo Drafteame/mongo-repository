@@ -4,18 +4,18 @@ import "github.com/Drafteame/mgorepo"
 
 type UserSearchOptions struct {
 	Filters UserSearchFilters
-	Orders  UserSearchOrders
+	Orders  mgorepo.SearchOrders
 	Limit   int64
 	Skip    int64
 }
 
-var _ mgorepo.SearchOptions[UserSearchOrders, UserSearchFilters] = UserSearchOptions{}
+var _ mgorepo.SearchOptions[UserSearchFilters] = UserSearchOptions{}
 
 func (o UserSearchOptions) GetFilters() UserSearchFilters {
 	return o.Filters
 }
 
-func (o UserSearchOptions) GetOrders() UserSearchOrders {
+func (o UserSearchOptions) GetOrders() mgorepo.SearchOrders {
 	return o.Orders
 }
 

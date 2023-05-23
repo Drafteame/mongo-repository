@@ -12,7 +12,6 @@ import (
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/seed"
-	"github.com/Drafteame/mgorepo/testdata/repository/daos"
 	ptesting "github.com/Drafteame/mgorepo/testing"
 )
 
@@ -28,7 +27,7 @@ func TestRepository_Delete(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		data := daos.TestDAO{
+		data := testDAO{
 			ID:         &oid,
 			Sortable:   0,
 			Identifier: "asd",
@@ -57,7 +56,7 @@ func TestRepository_Delete(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
-		data := daos.TestDAO{
+		data := testDAO{
 			ID:         &oid,
 			Sortable:   0,
 			Identifier: "asd",
