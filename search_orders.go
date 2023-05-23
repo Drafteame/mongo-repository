@@ -5,6 +5,11 @@ const (
 	OrderDesc = -1
 )
 
+const (
+	OrderAsc  = 1
+	OrderDesc = -1
+)
+
 type orderField struct {
 	Name  string
 	Order int
