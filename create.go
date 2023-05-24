@@ -5,7 +5,6 @@ import (
 	"errors"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (r Repository[M, D, SF, UF]) Create(ctx context.Context, model M) (M, error) {
@@ -62,7 +61,7 @@ func (r Repository[M, D, SF, UF]) createBuildData(model M) (bson.M, error) {
 		return bson.M{}, errors.Join(ErrCreatingDAO, errDao)
 	}
 
-	now := r.clock.Now()
+	now := r.Now()
 	bsonData := bson.M{}
 
 	bsonBytes, err := bson.Marshal(dao)
@@ -76,8 +75,8 @@ func (r Repository[M, D, SF, UF]) createBuildData(model M) (bson.M, error) {
 		return bson.M{}, errors.Join(ErrCreatingDAO, err)
 	}
 
-	bsonData[r.createdAtField] = primitive.NewDateTimeFromTime(now)
-	bsonData[r.updatedAtField] = primitive.NewDateTimeFromTime(now)
+	bsonData[r.createdAtField] = now
+	bsonData[r.updatedAtField] = now
 
 	return bsonData, nil
 }

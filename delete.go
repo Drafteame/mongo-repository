@@ -20,7 +20,7 @@ func (r Repository[M, D, SF, UF]) Delete(ctx context.Context, id string) (int64,
 
 	data := bson.M{
 		"$set": bson.M{
-			r.deletedAtField: primitive.NewDateTimeFromTime(r.clock.Now()),
+			r.deletedAtField: r.Now(),
 		},
 	}
 
