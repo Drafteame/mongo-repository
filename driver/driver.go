@@ -11,17 +11,18 @@ type Driver struct {
 	dbName string
 }
 
-func New() (*Driver, error) {
-	return NewWithConfig(DefaultConfig())
+func New(ctx context.Context) (*Driver, error) {
+	return NewWithConfig(ctx, DefaultConfig())
 }
 
-func NewWithConfig(config Config) (*Driver, error) {
+func NewWithConfig(ctx context.Context, config Config) (*Driver, error) {
 	uri, err := buildConnectionURI(&config)
 	if err != nil {
 		return nil, err
 	}
 
 	client, errConn := buildConnection(
+		ctx,
 		uri,
 		config.CertPath,
 		config.MinPoolSize,

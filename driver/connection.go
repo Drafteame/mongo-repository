@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func buildConnection(uri, certPath string, minSize, maxSize *int) (*mongo.Client, error) {
+func buildConnection(ctx context.Context, uri, certPath string, minSize, maxSize *int) (*mongo.Client, error) {
 	tlsConfig, err := getCustomTLSConfig(certPath)
 	if err != nil {
 		return nil, err
@@ -33,12 +33,12 @@ func buildConnection(uri, certPath string, minSize, maxSize *int) (*mongo.Client
 		opt = opt.SetTLSConfig(tlsConfig)
 	}
 
-	client, err := mongo.Connect(context.TODO(), opt)
+	client, err := mongo.Connect(ctx, opt)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = client.Ping(context.TODO(), nil); err != nil {
+	if err = client.Ping(ctx, nil); err != nil {
 		return nil, err
 	}
 

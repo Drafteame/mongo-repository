@@ -36,14 +36,13 @@ func NewRepository[
 	M    Model,
 	D    Dao,
 	SF   SearchFilters,
-	SO   SearchOptions[SORD, SF],
 	UF   UpdateFields,
 ](
 	db             Driver,
 	collectionName string,
 	filterBuilders []func(SF) (*bson.E, error),
 	updateBuilders []func(UF) (*bson.E, error),
-) Repository[M, D, SF, SO, UF] {}
+) Repository[M, D, SF, UF] {}
 ```
 
 ##### Generic constraints
@@ -57,13 +56,6 @@ func NewRepository[
 - `SF SearchFilters`: Is a struct that will be used to filter the results of a search, it should be created using just
   pointers of native go types and each field should represent a type of filter that can be applied to the collection. Fields should
   be public.
-- `SO SearchOptions[SF]`: Is an interface that will be used to configure the options of a search. This interface 
-  contain 4 methods to bring information to a search:
-  - `GetFilters() SF`: Should return a `SF` struct with the filters that should be applied to the search.
-  - `GetOrders() SearchOrders`: Should return a `SORD` struct with the orders that should be applied to the search.
-  - `GetLimit() int64`: Should return an int64 with the limit of results that should be returned by the 
-    search.
-  - `GetSkip() int64`: Should return an int64 with the number of results that should be skipped by the search.
 - `UF UpdateFields`: Is a struct that will be used to update a document, it should be created using just native go types
   and each field should represent a possible updated fields of a document. Fields should be public.
 

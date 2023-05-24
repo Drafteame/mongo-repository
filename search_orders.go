@@ -1,7 +1,5 @@
 package mgorepo
 
-import "go.mongodb.org/mongo-driver/bson"
-
 const (
 	OrderAsc  = 1
 	OrderDesc = -1
@@ -19,23 +17,17 @@ func NewSearchOrders() SearchOrders {
 }
 
 func (so SearchOrders) Add(name string, order int) SearchOrders {
-	return append(so, orderField{Name: name, Order: NormalizeOrder(order)})
+	return append(so, orderField{Name: name, Order: so.normalizeOrder(order)})
 }
 
-func (so SearchOrders) Build() (bson.D, error) {
-	if len(so) == 0 {
-		return bson.D{{Key: "_id", Value: 1}}, nil
+func (so SearchOrders) normalizeOrder(order int) int {
+	if order < -1 {
+		return -1
 	}
 
-	var orders bson.D
-
-	for _, field := range so {
-		if field.Order == 0 {
-			continue
-		}
-
-		orders = append(orders, bson.E{Key: field.Name, Value: field.Order})
+	if order > 1 {
+		return 1
 	}
 
-	return orders, nil
+	return order
 }

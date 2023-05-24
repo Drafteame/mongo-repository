@@ -11,12 +11,12 @@ import (
 	"github.com/Drafteame/mgorepo/logger"
 )
 
-type Repository[M Model, D Dao, SF SearchFilters, SO SearchOptions[SF], UF UpdateFields] struct {
+type Repository[M Model, D Dao, SF SearchFilters, UF UpdateFields] struct {
 	db             Driver
 	clock          Clock
 	log            Logger
 	logLevel       string
-	searchLimit    int64
+	searchLimit    int
 	collectionName string
 	withTimestamps bool
 	updatedAtField string
@@ -30,15 +30,14 @@ func NewRepository[
 	M Model,
 	D Dao,
 	SF SearchFilters,
-	SO SearchOptions[SF],
 	UF UpdateFields,
 ](
 	db Driver,
 	collectionName string,
 	filterBuilders []func(SF) (*bson.E, error),
 	updateBuilders []func(UF) (*bson.E, error),
-) Repository[M, D, SF, SO, UF] {
-	return Repository[M, D, SF, SO, UF]{
+) Repository[M, D, SF, UF] {
+	return Repository[M, D, SF, UF]{
 		db:             db,
 		clock:          clock.New(),
 		log:            logger.New(),
@@ -54,27 +53,27 @@ func NewRepository[
 	}
 }
 
-func (r Repository[M, D, SF, SO, UF]) Db() Driver {
+func (r Repository[M, D, SF, UF]) Db() Driver {
 	return r.db
 }
 
-func (r Repository[M, D, SF, SO, UF]) Clock() Clock {
+func (r Repository[M, D, SF, UF]) Clock() Clock {
 	return r.clock
 }
 
-func (r Repository[M, D, SF, SO, UF]) Log() Logger {
+func (r Repository[M, D, SF, UF]) Logger() Logger {
 	return r.log
 }
 
-func (r Repository[M, D, SF, SO, UF]) CollectionName() string {
+func (r Repository[M, D, SF, UF]) CollectionName() string {
 	return r.collectionName
 }
 
-func (r Repository[M, D, SF, SO, UF]) Collection() *mongo.Collection {
+func (r Repository[M, D, SF, UF]) Collection() *mongo.Collection {
 	return r.db.Client().Database(r.db.DbName()).Collection(r.collectionName)
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetUpdatedAtField(updatedAtField string) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetUpdatedAtField(updatedAtField string) Repository[M, D, SF, UF] {
 	if updatedAtField == "" {
 		updatedAtField = DefaultUpdatedAtField
 	}
@@ -84,7 +83,7 @@ func (r Repository[M, D, SF, SO, UF]) SetUpdatedAtField(updatedAtField string) R
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetCreatedAtField(createdAtField string) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetCreatedAtField(createdAtField string) Repository[M, D, SF, UF] {
 	if createdAtField == "" {
 		createdAtField = DefaultCreatedAtField
 	}
@@ -94,7 +93,7 @@ func (r Repository[M, D, SF, SO, UF]) SetCreatedAtField(createdAtField string) R
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetDeletedAtField(deletedAtField string) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetDeletedAtField(deletedAtField string) Repository[M, D, SF, UF] {
 	if deletedAtField == "" {
 		deletedAtField = DefaultDeletedAtField
 	}
@@ -103,22 +102,22 @@ func (r Repository[M, D, SF, SO, UF]) SetDeletedAtField(deletedAtField string) R
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetLogger(log Logger) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetLogger(log Logger) Repository[M, D, SF, UF] {
 	r.log = log
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetClock(clock Clock) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetClock(clock Clock) Repository[M, D, SF, UF] {
 	r.clock = clock
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetLogLevel(logLevel string) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetLogLevel(logLevel string) Repository[M, D, SF, UF] {
 	r.logLevel = strings.ToUpper(logLevel)
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) SetSearchLimit(searchLimit int64) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) SetDefaultSearchLimit(searchLimit int) Repository[M, D, SF, UF] {
 	if searchLimit <= 0 {
 		searchLimit = DefaultSearchLimit
 	}
@@ -127,18 +126,18 @@ func (r Repository[M, D, SF, SO, UF]) SetSearchLimit(searchLimit int64) Reposito
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) WithTimestamps(withTimestamps bool) Repository[M, D, SF, SO, UF] {
+func (r Repository[M, D, SF, UF]) WithTimestamps(withTimestamps bool) Repository[M, D, SF, UF] {
 	r.withTimestamps = withTimestamps
 	return r
 }
 
-func (r Repository[M, D, SF, SO, UF]) logErrorf(err error, action, message string, args ...any) {
+func (r Repository[M, D, SF, UF]) logErrorf(err error, action, message string, args ...any) {
 	if r.log != nil && r.logLevel == logger.LevelError {
 		r.log.Errorf(err, action, message, args...)
 	}
 }
 
-func (r Repository[M, D, SF, SO, UF]) logDebugf(action, message string, args ...any) {
+func (r Repository[M, D, SF, UF]) logDebugf(action, message string, args ...any) {
 	if r.log != nil && r.logLevel == logger.LevelDebug {
 		r.log.Debugf(action, message, args...)
 	}

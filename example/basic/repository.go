@@ -9,7 +9,7 @@ import (
 const collection = "users"
 
 type UserRepository struct {
-	mgorepo.Repository[UserModel, UserDao, UserSearchFilters, UserSearchOptions, UserUpdateFields]
+	mgorepo.Repository[UserModel, UserDao, UserSearchFilters, UserUpdateFields]
 }
 
 func NewUserRepository(db mgorepo.Driver) UserRepository {
@@ -18,7 +18,6 @@ func NewUserRepository(db mgorepo.Driver) UserRepository {
 			UserModel,
 			UserDao,
 			UserSearchFilters,
-			UserSearchOptions,
 			UserUpdateFields,
 		](
 			db,

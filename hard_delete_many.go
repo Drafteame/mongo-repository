@@ -2,7 +2,7 @@ package mgorepo
 
 import "context"
 
-func (r Repository[M, D, SF, SO, UF]) HardDeleteMany(ctx context.Context, filters SF) (int64, error) {
+func (r Repository[M, D, SF, UF]) HardDeleteMany(ctx context.Context, filters SF) (int64, error) {
 	if r.IsSearchFiltersEmpty(filters) {
 		r.logErrorf(ErrEmptyFilters, actionHardDeleteMany, "empty search filters for %s hard delete", r.collectionName)
 		return 0, ErrEmptyFilters

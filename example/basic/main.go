@@ -35,9 +35,7 @@ func searchExample(d mgorepo.Driver) {
 	// Search users with age 21
 	age := 21
 
-	opts := UserSearchOptions{
-		Filters: UserSearchFilters{GreaterThanAge: &age},
-	}
+	opts := mgorepo.NewSearchOptions(UserSearchFilters{GreaterThanAge: &age})
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -57,10 +55,8 @@ func searchAndSortExample(d mgorepo.Driver) {
 	// Search users with age 21
 	age := 21
 
-	opts := UserSearchOptions{
-		Filters: UserSearchFilters{GreaterThanAge: &age},
-		Orders:  mgorepo.NewSearchOrders().Add("age", mgorepo.OrderDesc),
-	}
+	opts := mgorepo.NewSearchOptions(UserSearchFilters{GreaterThanAge: &age}).
+		WithOrder("age", mgorepo.OrderDesc)
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -80,10 +76,8 @@ func searchOneExample(d mgorepo.Driver) {
 	// Search user with name "name_1"
 	name := "name_1"
 
-	opts := UserSearchOptions{
-		Filters: UserSearchFilters{Name: &name},
-		Limit:   1,
-	}
+	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}).
+		WithLimit(1)
 
 	user, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -101,10 +95,8 @@ func getExample(d mgorepo.Driver) {
 	// Search user with name "name_1"
 	name := "name_1"
 
-	opts := UserSearchOptions{
-		Filters: UserSearchFilters{Name: &name},
-		Limit:   1,
-	}
+	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}).
+		WithLimit(1)
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -128,10 +120,8 @@ func updateExample(d mgorepo.Driver) {
 
 	name := "name_1"
 
-	opts := UserSearchOptions{
-		Filters: UserSearchFilters{Name: &name},
-		Limit:   1,
-	}
+	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}).
+		WithLimit(1)
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -166,10 +156,8 @@ func deleteExample(d mgorepo.Driver) {
 
 	name := "name_1"
 
-	opts := UserSearchOptions{
-		Filters: UserSearchFilters{Name: &name},
-		Limit:   1,
-	}
+	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}).
+		WithLimit(1)
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {

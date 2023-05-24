@@ -6,7 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (r Repository[M, D, SF, SO, UF]) DeleteMany(ctx context.Context, filters SF) (int64, error) {
+func (r Repository[M, D, SF, UF]) DeleteMany(ctx context.Context, filters SF) (int64, error) {
 	bf, err := r.deleteManyFilters(filters)
 	if err != nil {
 		return 0, err
@@ -25,7 +25,7 @@ func (r Repository[M, D, SF, SO, UF]) DeleteMany(ctx context.Context, filters SF
 	return res.ModifiedCount, nil
 }
 
-func (r Repository[M, D, SF, SO, UF]) deleteManyFilters(filters SF) (bson.D, error) {
+func (r Repository[M, D, SF, UF]) deleteManyFilters(filters SF) (bson.D, error) {
 	if r.IsSearchFiltersEmpty(filters) {
 		r.logErrorf(ErrEmptyFilters, actionDeleteMany, "error deleting many %s document", r.collectionName)
 		return nil, ErrEmptyFilters
