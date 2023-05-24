@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+
+	"github.com/Drafteame/mgorepo/clock"
 )
 
 const (
@@ -16,8 +18,9 @@ const (
 	debugFormat = "%s %s%s %s%s %s%s\n"
 	errorFormat = "%s %s%s %s%s %s%s %s%s\n"
 
-	debugPrefix    = "[DEBUG]"
-	errorPrefix    = "[ERROR]"
+	debugPrefix = "[DEBUG]"
+	errorPrefix = "[ERROR]"
+
 	actionSection  = "action="
 	messageSection = "message="
 	errorSection   = "error="
@@ -31,8 +34,15 @@ var (
 	blue    = color.New(color.FgBlue)
 )
 
+//go:generate mockery --name Clock --output ./mocks --outpkg mocks --case underscore
+
+type Clock interface {
+	Now() time.Time
+}
+
 type Logger struct {
 	log     *log.Logger
+	clock   Clock
 	colored bool
 }
 
@@ -43,7 +53,9 @@ func New() Logger {
 	magenta.DisableColor()
 
 	return Logger{
-		log: log.New(log.Writer(), "", 0),
+		log:     log.New(log.Writer(), "", 0),
+		clock:   clock.New(),
+		colored: false,
 	}
 }
 
@@ -53,11 +65,22 @@ func (l Logger) Colored() Logger {
 	blue.EnableColor()
 	magenta.EnableColor()
 
+	l.colored = true
+
+	return l
+}
+
+func (l Logger) IsColored() bool {
+	return l.colored
+}
+
+func (l Logger) SetClock(clock Clock) Logger {
+	l.clock = clock
 	return l
 }
 
 func (l Logger) Debugf(action, message string, args ...any) {
-	timeVal := time.Now().Format(DateFormat)
+	timeVal := l.clock.Now().Format(DateFormat)
 	message = strings.ReplaceAll(fmt.Sprintf(message, args...), `"`, `\"`)
 
 	l.log.SetPrefix(magenta.Sprint(Prefix) + " ")
@@ -75,7 +98,7 @@ func (l Logger) Debugf(action, message string, args ...any) {
 }
 
 func (l Logger) Errorf(err error, action, message string, args ...any) {
-	timeVal := time.Now().Format(DateFormat)
+	timeVal := l.clock.Now().Format(DateFormat)
 	message = strings.ReplaceAll(fmt.Sprintf(message, args...), `"`, `\"`)
 
 	l.log.SetPrefix(magenta.Sprint(Prefix) + " ")

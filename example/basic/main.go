@@ -36,7 +36,7 @@ func searchExample(d mgorepo.Driver) {
 	age := 21
 
 	opts := UserSearchOptions{
-		Filters: UserSearchFilters{GraterThanAge: &age},
+		Filters: UserSearchFilters{GreaterThanAge: &age},
 	}
 
 	users, errSearch := repo.Search(context.Background(), opts)
@@ -58,7 +58,7 @@ func searchAndSortExample(d mgorepo.Driver) {
 	age := 21
 
 	opts := UserSearchOptions{
-		Filters: UserSearchFilters{GraterThanAge: &age},
+		Filters: UserSearchFilters{GreaterThanAge: &age},
 		Orders:  mgorepo.NewSearchOrders().Add("age", mgorepo.OrderDesc),
 	}
 

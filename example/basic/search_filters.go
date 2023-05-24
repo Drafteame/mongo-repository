@@ -3,9 +3,9 @@ package main
 import "go.mongodb.org/mongo-driver/bson"
 
 type UserSearchFilters struct {
-	Name          *string
-	LastName      *string
-	GraterThanAge *int
+	Name           *string
+	LastName       *string
+	GreaterThanAge *int
 }
 
 func buildNameFilter(filters UserSearchFilters) (*bson.E, error) {
@@ -31,12 +31,12 @@ func buildLastNameFilter(filters UserSearchFilters) (*bson.E, error) {
 }
 
 func buildGreaterThanAgeFilter(filters UserSearchFilters) (*bson.E, error) {
-	if filters.GraterThanAge == nil {
+	if filters.GreaterThanAge == nil {
 		return nil, nil
 	}
 
 	return &bson.E{
 		Key:   "age",
-		Value: bson.M{"$gt": *filters.GraterThanAge},
+		Value: bson.M{"$gt": *filters.GreaterThanAge},
 	}, nil
 }

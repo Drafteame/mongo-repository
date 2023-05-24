@@ -19,7 +19,7 @@ go get github.com/Drafteame/mgorepo
 
 ## Usage
 
-This package was made with the purpose of have a way to generify mongo actions using the repository pattern on a DDD
+This package was made with the purpose of having a way to generify mongo actions using the repository pattern on a DDD
 environment. It's not an ORM, it's just a way to have a generic way to interact with mongo.
 
 ### Main concepts
@@ -53,7 +53,7 @@ func NewRepository[
 - `D Dao`: Is a struct that will be used to interact with the database, it should be created using mongo data types,
   should contain all document fields of a collection and be compliant with the generic interface `DaoFiller[M Model]`.
   Fields should be public.
-  ID field of a `Dao` should be defined as `ID primitive.ObjectID` using tag `bson:"_id,omitempty"`.
+  ID field of a `Dao` should be defined as `primitive.ObjectID` or `*primitive.ObjectID` using tag `bson:"_id,omitempty"`.
 - `SF SearchFilters`: Is a struct that will be used to filter the results of a search, it should be created using just
   pointers of native go types and each field should represent a type of filter that can be applied to the collection. Fields should
   be public.
@@ -69,7 +69,7 @@ func NewRepository[
 
 ##### Parameters
 
-- `db Driver`: Is an interface that implement 2 methods:
+- `db Driver`: Is an interface that implements 2 methods:
   - `Client() *mongo.Client`: Should return a mongo client that will be used to interact with the database (package used
     to interact with mongo is `go.mongodb.org/mongo-driver/mongo`).
   - `DbName() string`: Should return a string with the name of the database that will be used on the operations.

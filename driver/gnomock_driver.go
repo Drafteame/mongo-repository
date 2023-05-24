@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/orlangure/gnomock"
-	gnomokmongo "github.com/orlangure/gnomock/preset/mongo"
+	gnomockmongo "github.com/orlangure/gnomock/preset/mongo"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -20,7 +20,7 @@ type TestDriver struct {
 func NewTest(t *testing.T) (*TestDriver, error) {
 	md := &TestDriver{}
 
-	serverPreset := gnomokmongo.Preset()
+	serverPreset := gnomockmongo.Preset()
 	server, startErr := gnomock.Start(serverPreset)
 	if startErr != nil {
 		return nil, startErr
