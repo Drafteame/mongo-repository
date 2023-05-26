@@ -6,18 +6,24 @@ import (
 
 type testDAO struct {
 	ID         *primitive.ObjectID `bson:"_id,omitempty"`
-	Sortable   int                 `bson:"sortable"`
-	Identifier string              `bson:"identifier"`
-	CreatedAt  primitive.DateTime  `bson:"createdAt"`
-	UpdatedAt  primitive.DateTime  `bson:"updatedAt"`
+	Sortable   int                 `bson:"sortable,omitempty"`
+	Identifier string              `bson:"identifier,omitempty"`
+	CreatedAt  primitive.DateTime  `bson:"createdAt,omitempty"`
+	UpdatedAt  primitive.DateTime  `bson:"updatedAt,omitempty"`
 	DeletedAt  primitive.DateTime  `bson:"deletedAt,omitempty"`
 }
 
 var _ DaoFiller[testModel] = (*testDAO)(nil)
 
 func (d *testDAO) ToModel() testModel {
+	var id string
+
+	if d.ID != nil {
+		id = d.ID.Hex()
+	}
+
 	return testModel{
-		ID:         d.ID.Hex(),
+		ID:         id,
 		Identifier: d.Identifier,
 		Sortable:   d.Sortable,
 		CreatedAt:  d.CreatedAt.Time().UTC(),

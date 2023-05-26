@@ -63,5 +63,5 @@ func (r Repository[M, D, SF, UF]) printSearchDebug(filters bson.D, findOpts *opt
 		}
 	}
 
-	r.logDebugf(actionSearch, "filters: %+v sort: %+v skip: %+v limit: %+v", filters, shallowOpts.Sort, skip, limit)
+	r.logDebugf(actionSearch, "filters: %+v sort: %+v skip: %+v limit: %+v project: %+v", filters, shallowOpts.Sort, skip, limit, findOpts.Projection)
 }

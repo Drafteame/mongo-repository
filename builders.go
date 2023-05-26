@@ -48,10 +48,29 @@ func (r Repository[M, D, SF, UF]) BuildSearchOptions(opts SearchOptions[SF]) (bs
 		return nil, nil, err
 	}
 
+	findOpts, err := r.buildFindOptions(opts)
+	if err != nil {
+		r.logErrorf(err, buildSearchOptions, "error building search options for %s", r.collectionName)
+		return nil, nil, err
+	}
+
+	return bsonFilters, findOpts, nil
+}
+
+func (r Repository[M, D, SF, UF]) buildProjection(opts SearchOptions[SF]) bson.M {
+	projection := bson.M{}
+
+	for field, val := range opts.projection {
+		projection[field] = val
+	}
+
+	return projection
+}
+
+func (r Repository[M, D, SF, UF]) buildFindOptions(opts SearchOptions[SF]) (*options.FindOptions, error) {
 	bsonOrders, err := r.BuildSearchOrders(opts.Orders())
 	if err != nil {
-		r.logErrorf(err, buildSearchOptions, "error building search orders for %s", r.collectionName)
-		return nil, nil, err
+		return nil, err
 	}
 
 	findOpts := options.Find()
@@ -70,7 +89,11 @@ func (r Repository[M, D, SF, UF]) BuildSearchOptions(opts SearchOptions[SF]) (bs
 		findOpts.SetSort(bsonOrders)
 	}
 
-	return bsonFilters, findOpts, nil
+	if projection := r.buildProjection(opts); len(projection) > 0 {
+		findOpts.SetProjection(projection)
+	}
+
+	return findOpts, nil
 }
 
 // BuildUpdateFields builds the update fields from the given options and returns a bson.D

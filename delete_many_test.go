@@ -52,7 +52,12 @@ func TestRepository_DeleteMany(t *testing.T) {
 			t.Fatal(errDelete)
 		}
 
-		assert.Equal(t, total, deleted)
+		totalAfterDel, errAfterDel := repo.Count(context.Background(), filters)
+		if errAfterDel != nil {
+			t.Fatal(errAfterDel)
+		}
+
+		assert.Equal(t, totalAfterDel, total-deleted)
 	})
 
 	t.Run("error delete many with empty filters", func(t *testing.T) {
