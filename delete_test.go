@@ -28,7 +28,7 @@ func TestRepository_Delete(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		data := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Sortable:   0,
 			Identifier: "asd",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -57,7 +57,7 @@ func TestRepository_Delete(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		data := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Sortable:   0,
 			Identifier: "asd",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),

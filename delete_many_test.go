@@ -30,7 +30,7 @@ func TestRepository_DeleteMany(t *testing.T) {
 			oid := primitive.NewObjectID()
 
 			dao := testDAO{
-				ID:         &oid,
+				ID:         oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
 			}

@@ -20,15 +20,31 @@ func TestRepository_Create(t *testing.T) {
 
 	c := clock.NewTest(time.Now()).ForceUTC()
 
-	expected := testModel{
-		Identifier: "identifier",
-	}
+	t.Run("success create", func(t *testing.T) {
+		expected := testModel{
+			Identifier: "identifier",
+		}
 
-	repo := newTestRepository(d).SetClock(c)
-	model, err := repo.Create(context.Background(), expected)
+		repo := newTestRepository(d).SetClock(c)
+		model, err := repo.Create(context.Background(), expected)
 
-	assert.Nil(t, err)
-	assert.NotEmpty(t, model.ID)
-	ptesting.AssertDate(t, c.Now(), model.CreatedAt)
-	ptesting.AssertDate(t, c.Now(), model.UpdatedAt)
+		assert.Nil(t, err)
+		assert.NotEmpty(t, model.ID)
+		ptesting.AssertDate(t, c.Now(), model.CreatedAt)
+		ptesting.AssertDate(t, c.Now(), model.UpdatedAt)
+	})
+
+	t.Run("success create with no timestamps", func(t *testing.T) {
+		expected := testModel{
+			Identifier: "identifier",
+		}
+
+		repo := newTestRepository(d).SetClock(c).WithTimestamps(false)
+		model, err := repo.Create(context.Background(), expected)
+
+		assert.Nil(t, err)
+		assert.NotEmpty(t, model.ID)
+		ptesting.AssertEmptyDate(t, model.CreatedAt)
+		ptesting.AssertEmptyDate(t, model.UpdatedAt)
+	})
 }

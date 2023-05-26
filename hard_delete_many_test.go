@@ -26,7 +26,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 			oid := primitive.NewObjectID()
 
 			dao := testDAO{
-				ID:         &oid,
+				ID:         oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
 			}
@@ -75,7 +75,7 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 		for i := 0; i < 100; i++ {
 			oid := primitive.NewObjectID()
 			dao := testDAO{
-				ID:         &oid,
+				ID:         oid,
 				Identifier: "test",
 				Sortable:   randomNumber(),
 			}

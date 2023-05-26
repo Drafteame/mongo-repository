@@ -281,7 +281,7 @@ func TestRepository_Search(t *testing.T) {
 		now := time.Now().UTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "identifier",
 			Sortable:   1,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -289,7 +289,7 @@ func TestRepository_Search(t *testing.T) {
 		}
 
 		dao2 := testDAO{
-			ID:         &oid2,
+			ID:         oid2,
 			Identifier: "identifier",
 			Sortable:   2,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),

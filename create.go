@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
+// Create creates a new record on the collection based on the model.
 func (r Repository[M, D, SF, UF]) Create(ctx context.Context, model M) (M, error) {
 	var zeroM M
 
@@ -61,7 +62,6 @@ func (r Repository[M, D, SF, UF]) createBuildData(model M) (bson.M, error) {
 		return bson.M{}, errors.Join(ErrCreatingDAO, errDao)
 	}
 
-	now := r.Now()
 	bsonData := bson.M{}
 
 	bsonBytes, err := bson.Marshal(dao)
@@ -75,8 +75,12 @@ func (r Repository[M, D, SF, UF]) createBuildData(model M) (bson.M, error) {
 		return bson.M{}, errors.Join(ErrCreatingDAO, err)
 	}
 
-	bsonData[r.createdAtField] = now
-	bsonData[r.updatedAtField] = now
+	if r.withTimestamps {
+		now := r.Now()
+
+		bsonData["createdAt"] = now
+		bsonData["updatedAt"] = now
+	}
 
 	return bsonData, nil
 }

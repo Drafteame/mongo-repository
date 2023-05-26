@@ -27,7 +27,7 @@ func TestRepository_Update(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "test",
 		}
 
@@ -55,7 +55,7 @@ func TestRepository_Update(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "test",
 		}
 

@@ -27,7 +27,7 @@ func TestRepository_Get(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
 			UpdatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -49,7 +49,7 @@ func TestRepository_Get(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
 			UpdatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -72,7 +72,7 @@ func TestRepository_Get(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
 			UpdatedAt:  primitive.NewDateTimeFromTime(c.Now()),

@@ -5,12 +5,12 @@ import (
 )
 
 type testDAO struct {
-	ID         *primitive.ObjectID `bson:"_id,omitempty"`
-	Sortable   int                 `bson:"sortable,omitempty"`
-	Identifier string              `bson:"identifier,omitempty"`
-	CreatedAt  primitive.DateTime  `bson:"createdAt,omitempty"`
-	UpdatedAt  primitive.DateTime  `bson:"updatedAt,omitempty"`
-	DeletedAt  primitive.DateTime  `bson:"deletedAt,omitempty"`
+	ID         primitive.ObjectID `bson:"_id,omitempty"`
+	Sortable   int                `bson:"sortable,omitempty"`
+	Identifier string             `bson:"identifier,omitempty"`
+	CreatedAt  primitive.DateTime `bson:"createdAt,omitempty"`
+	UpdatedAt  primitive.DateTime `bson:"updatedAt,omitempty"`
+	DeletedAt  primitive.DateTime `bson:"deletedAt,omitempty"`
 }
 
 var _ DaoFiller[testModel] = (*testDAO)(nil)
@@ -18,7 +18,7 @@ var _ DaoFiller[testModel] = (*testDAO)(nil)
 func (d *testDAO) ToModel() testModel {
 	var id string
 
-	if d.ID != nil {
+	if !d.ID.IsZero() {
 		id = d.ID.Hex()
 	}
 
@@ -39,7 +39,7 @@ func (d *testDAO) FromModel(m testModel) error {
 			return err
 		}
 
-		d.ID = &id
+		d.ID = id
 	}
 
 	d.Identifier = m.Identifier

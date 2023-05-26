@@ -25,7 +25,7 @@ func TestRepository_HardDelete(t *testing.T) {
 		oid := primitive.NewObjectID()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "test",
 			Sortable:   randomNumber(),
 		}
