@@ -6,7 +6,7 @@ require (
 	github.com/fatih/color v1.15.0
 	github.com/magefile/mage v1.15.0
 	github.com/orlangure/gnomock v0.28.0
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.4
 	go.mongodb.org/mongo-driver v1.11.6
 )
 
