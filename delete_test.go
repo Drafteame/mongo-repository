@@ -50,18 +50,21 @@ func TestRepository_Delete(t *testing.T) {
 		}
 
 		ptesting.AssertDate(t, c.Now(), data.DeletedAt.Time().UTC())
+		ptesting.AssertDate(t, c.Now(), data.UpdatedAt.Time().UTC())
 	})
 
 	t.Run("success delete with no affected", func(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
+		pnow := primitive.NewDateTimeFromTime(c.Now())
+
 		data := testDAO{
 			ID:         oid,
 			Sortable:   0,
 			Identifier: "asd",
-			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
-			UpdatedAt:  primitive.NewDateTimeFromTime(c.Now()),
+			CreatedAt:  pnow,
+			UpdatedAt:  pnow,
 		}
 
 		seed.InsertOne(t, db, collection, data)
@@ -78,7 +81,8 @@ func TestRepository_Delete(t *testing.T) {
 			t.Fatal(errFind)
 		}
 
-		assert.Equal(t, primitive.DateTime(0), data.DeletedAt)
+		ptesting.AssertEmptyDate(t, data.DeletedAt)
+		ptesting.AssertDate(t, pnow, data.UpdatedAt)
 	})
 
 	t.Run("success delete with no timestamps", func(t *testing.T) {

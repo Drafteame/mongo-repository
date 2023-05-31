@@ -18,7 +18,14 @@ func (r Repository[M, D, SF, UF]) DeleteMany(ctx context.Context, filters SF) (i
 		return 0, err
 	}
 
-	data := bson.D{{Key: "$set", Value: bson.D{{Key: r.deletedAtField, Value: r.Now()}}}}
+	now := r.Now()
+
+	data := bson.M{
+		"$set": bson.M{
+			r.updatedAtField: now,
+			r.deletedAtField: now,
+		},
+	}
 
 	r.logDebugf(actionDeleteMany, "filters: %+v data: %+v", bf, data)
 

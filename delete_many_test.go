@@ -11,6 +11,7 @@ import (
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_DeleteMany(t *testing.T) {
@@ -39,9 +40,13 @@ func TestRepository_DeleteMany(t *testing.T) {
 
 		seed.InsertMany(t, db, collection, daos...)
 
-		filters := newSearchFilters().WithSortableGreaterThan(50)
-
 		repo := newTestRepository(d).SetClock(c)
+
+		filters := newSearchFilters().WithSortableGreaterThan(50)
+		bsonFilters, err := repo.BuildSearchFilters(filters)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		total, err := repo.Count(context.Background(), filters)
 		if err != nil {
@@ -59,6 +64,21 @@ func TestRepository_DeleteMany(t *testing.T) {
 		}
 
 		assert.Equal(t, totalAfterDel, total-deleted)
+
+		cursor, errFind := db.Collection(collection).Find(context.Background(), bsonFilters)
+		if errFind != nil {
+			t.Fatal(errFind)
+		}
+
+		for cursor.Next(context.Background()) {
+			var dao testDAO
+			if errDecode := cursor.Decode(&dao); errDecode != nil {
+				t.Fatal(errDecode)
+			}
+
+			ptesting.AssertDate(t, c.Now(), dao.DeletedAt.Time().UTC())
+			ptesting.AssertDate(t, c.Now(), dao.UpdatedAt.Time().UTC())
+		}
 	})
 
 	t.Run("error delete many with empty filters", func(t *testing.T) {

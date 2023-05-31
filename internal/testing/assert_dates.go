@@ -25,22 +25,13 @@ func AssertEmptyDate(t *testing.T, actual any, msgAndArgs ...any) {
 		return
 	}
 
-	switch a := actual.(type) {
+	switch actual.(type) {
 	case MongoDate:
-		AssertDate(t, getEmptyDateByYear(a.Time().Year()), actual, msgAndArgs...)
+		AssertDate(t, primitive.DateTime(0), actual, msgAndArgs...)
 	case TimeTruncater:
-		AssertDate(t, getEmptyDateByYear(a.Year()), actual, msgAndArgs...)
+		AssertDate(t, time.Time{}, actual, msgAndArgs...)
 	default:
 		t.Fatal("can't assert types different than time.Time or primitive.DateTime values")
-	}
-}
-
-func getEmptyDateByYear(year int) time.Time {
-	switch year {
-	case 1970:
-		return time.Date(1970, time.January, 1, 0, 0, 0, 0, time.Local)
-	default:
-		return time.Time{}
 	}
 }
 

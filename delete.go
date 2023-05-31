@@ -24,9 +24,12 @@ func (r Repository[M, D, SF, UF]) Delete(ctx context.Context, id string) (int64,
 		{Key: "_id", Value: oid},
 	}
 
+	now := r.Now()
+
 	data := bson.M{
 		"$set": bson.M{
-			r.deletedAtField: r.Now(),
+			r.updatedAtField: now,
+			r.deletedAtField: now,
 		},
 	}
 
