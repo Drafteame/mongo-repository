@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func buildConnection(ctx context.Context, uri, certPath string, minSize, maxSize *int) (*mongo.Client, error) {
+func buildConnection(ctx context.Context, uri, certPath string, minSize, maxSize int) (*mongo.Client, error) {
 	tlsConfig, err := getCustomTLSConfig(certPath)
 	if err != nil {
 		return nil, err
@@ -21,12 +21,12 @@ func buildConnection(ctx context.Context, uri, certPath string, minSize, maxSize
 
 	opt := options.Client().ApplyURI(uri)
 
-	if minSize != nil {
-		opt = opt.SetMinPoolSize(uint64(*minSize))
+	if minSize > 0 {
+		opt = opt.SetMinPoolSize(uint64(minSize))
 	}
 
-	if maxSize != nil {
-		opt = opt.SetMaxPoolSize(uint64(*maxSize))
+	if maxSize > 0 {
+		opt = opt.SetMaxPoolSize(uint64(maxSize))
 	}
 
 	if tlsConfig != nil {
@@ -124,11 +124,11 @@ func buildConnectionURI(config *Config) (string, error) {
 		}
 	}
 
-	return fmt.Sprintf(template, config.UserName, config.Password, config.ClusterEndpoint, config.DBName), nil
+	return fmt.Sprintf(template, config.Username, config.Password, config.ClusterEndpoint, config.DBName), nil
 }
 
 func validateMinimumConfig(config *Config) bool {
-	if config.UserName == "" || config.Password == "" || config.ClusterEndpoint == "" || config.DBName == "" {
+	if config.Username == "" || config.Password == "" || config.ClusterEndpoint == "" || config.DBName == "" {
 		return false
 	}
 

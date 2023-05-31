@@ -10,8 +10,8 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Update(t *testing.T) {
@@ -27,7 +27,7 @@ func TestRepository_Update(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "test",
 		}
 
@@ -55,7 +55,7 @@ func TestRepository_Update(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "test",
 		}
 
@@ -68,5 +68,33 @@ func TestRepository_Update(t *testing.T) {
 
 		assert.Error(t, err)
 		assert.ErrorIs(t, err, ErrEmptyUpdate)
+	})
+
+	t.Run("update with no timestamps", func(t *testing.T) {
+		oid := primitive.NewObjectID()
+		c := clock.NewTest(time.Now()).ForceUTC()
+
+		dao := testDAO{
+			ID:         oid,
+			Identifier: "test",
+		}
+
+		seed.InsertOne(t, db, collection, dao)
+
+		opts := newUpdateFields().WithIdentifier("test2")
+
+		repo := newTestRepository(d).SetClock(c).WithTimestamps(false)
+		affected, err := repo.Update(context.Background(), oid.Hex(), opts)
+
+		assert.NoError(t, err)
+		assert.Equal(t, int64(1), affected)
+
+		updated, err := repo.Get(context.Background(), oid.Hex())
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		assert.Equal(t, "test2", updated.Identifier)
+		ptesting.AssertEmptyDate(t, updated.UpdatedAt)
 	})
 }

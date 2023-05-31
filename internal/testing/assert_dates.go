@@ -27,6 +27,11 @@ func AssertEmptyDate(t *testing.T, actual any, msgAndArgs ...any) {
 
 	switch a := actual.(type) {
 	case MongoDate:
+		if aux := int64(primitive.NewDateTimeFromTime(a.Time())); aux == 0 {
+			assert.Equal(t, int64(0), aux)
+			return
+		}
+
 		AssertDate(t, getEmptyDateByYear(a.Time().Year()), actual, msgAndArgs...)
 	case TimeTruncater:
 		AssertDate(t, getEmptyDateByYear(a.Year()), actual, msgAndArgs...)

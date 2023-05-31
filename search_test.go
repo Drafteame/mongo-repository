@@ -9,8 +9,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Search(t *testing.T) {
@@ -23,6 +23,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -52,6 +53,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with limit", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -71,6 +73,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with offset", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
@@ -99,6 +102,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with sort", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
@@ -128,6 +132,7 @@ func TestRepository_Search(t *testing.T) {
 
 	t.Run("success search with sort desc", func(t *testing.T) {
 		now := time.Now().UTC()
+
 		dao := testDAO{
 			Identifier: "identifier",
 			Sortable:   1,
@@ -276,7 +281,7 @@ func TestRepository_Search(t *testing.T) {
 		now := time.Now().UTC()
 
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "identifier",
 			Sortable:   1,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),
@@ -284,7 +289,7 @@ func TestRepository_Search(t *testing.T) {
 		}
 
 		dao2 := testDAO{
-			ID:         &oid2,
+			ID:         oid2,
 			Identifier: "identifier",
 			Sortable:   2,
 			CreatedAt:  primitive.NewDateTimeFromTime(now),

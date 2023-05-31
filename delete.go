@@ -7,7 +7,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// Delete deletes a document by id. If the repository is configured to not use timestamps, this operation will be
+// applied as a hard delete.
 func (r Repository[M, D, SF, UF]) Delete(ctx context.Context, id string) (int64, error) {
+	if !r.withTimestamps {
+		return r.HardDelete(ctx, id)
+	}
+
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		r.logErrorf(err, actionDelete, "error converting %s to ObjectID", id)
@@ -18,9 +24,12 @@ func (r Repository[M, D, SF, UF]) Delete(ctx context.Context, id string) (int64,
 		{Key: "_id", Value: oid},
 	}
 
+	now := r.Now()
+
 	data := bson.M{
 		"$set": bson.M{
-			r.deletedAtField: r.Now(),
+			r.updatedAtField: now,
+			r.deletedAtField: now,
 		},
 	}
 

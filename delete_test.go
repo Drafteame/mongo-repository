@@ -11,8 +11,8 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Delete(t *testing.T) {
@@ -28,7 +28,7 @@ func TestRepository_Delete(t *testing.T) {
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		data := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Sortable:   0,
 			Identifier: "asd",
 			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
@@ -50,18 +50,21 @@ func TestRepository_Delete(t *testing.T) {
 		}
 
 		ptesting.AssertDate(t, c.Now(), data.DeletedAt.Time().UTC())
+		ptesting.AssertDate(t, c.Now(), data.UpdatedAt.Time().UTC())
 	})
 
 	t.Run("success delete with no affected", func(t *testing.T) {
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
+		pnow := primitive.NewDateTimeFromTime(c.Now())
+
 		data := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Sortable:   0,
 			Identifier: "asd",
-			CreatedAt:  primitive.NewDateTimeFromTime(c.Now()),
-			UpdatedAt:  primitive.NewDateTimeFromTime(c.Now()),
+			CreatedAt:  pnow,
+			UpdatedAt:  pnow,
 		}
 
 		seed.InsertOne(t, db, collection, data)
@@ -78,6 +81,33 @@ func TestRepository_Delete(t *testing.T) {
 			t.Fatal(errFind)
 		}
 
-		assert.Equal(t, primitive.DateTime(0), data.DeletedAt)
+		ptesting.AssertEmptyDate(t, data.DeletedAt)
+		ptesting.AssertDate(t, pnow, data.UpdatedAt)
+	})
+
+	t.Run("success delete with no timestamps", func(t *testing.T) {
+		oid := primitive.NewObjectID()
+
+		data := testDAO{
+			ID:         oid,
+			Sortable:   0,
+			Identifier: "asd",
+		}
+
+		seed.InsertOne(t, db, collection, data)
+
+		repo := newTestRepository(d)
+
+		deletedCount, err := repo.Delete(context.Background(), oid.Hex())
+
+		assert.Nil(t, err)
+		assert.Equal(t, int64(1), deletedCount)
+
+		total, errCount := repo.Count(context.Background(), newSearchFilters())
+		if errCount != nil {
+			t.Fatal(errCount)
+		}
+
+		assert.Equal(t, int64(0), total)
 	})
 }

@@ -1,21 +1,23 @@
 package driver
 
-import "github.com/Drafteame/mgorepo/env"
+import (
+	"github.com/Drafteame/mgorepo/internal/env"
+)
 
 // Config is the configuration for the driver.
 type Config struct {
 	SSLVerifyCertificate bool
 	ConnectTimeout       int
 	QueryTimeout         int
-	MinPoolSize          *int
-	MaxPoolSize          *int
+	MinPoolSize          int
+	MaxPoolSize          int
 	URI                  string
 	ReadPreference       string
 	RetryWrites          string
 	AuthSource           string
 	AuthMechanism        string
 	ReplicaSet           string
-	UserName             string
+	Username             string
 	Password             string
 	ClusterEndpoint      string
 	CertPath             string
@@ -23,32 +25,22 @@ type Config struct {
 }
 
 func DefaultConfig() Config {
-	var maxPoolSize, minPoolSize *int
-
-	if val := env.GetInt(env.MongoMaxPoolSizeEnv); val != 0 {
-		maxPoolSize = &val
-	}
-
-	if val := env.GetInt(env.MongoMinPoolSizeEnv); val != 0 {
-		minPoolSize = &val
-	}
-
 	return Config{
-		SSLVerifyCertificate: env.GetBool(env.MongoSSLVerifyEnv),
-		ConnectTimeout:       env.GetInt(env.MongoConnectTimeoutEnv),
-		QueryTimeout:         env.GetInt(env.MongoQueryTimeoutEnv),
-		URI:                  env.GetString(env.MongoURIEnv),
-		ReadPreference:       env.GetString(env.MongoReadPreferenceEnv),
-		RetryWrites:          env.GetString(env.MongoRetryWritesEnv),
-		AuthSource:           env.GetString(env.MongoAuthSourceEnv),
-		AuthMechanism:        env.GetString(env.MongoAuthMechanismEnv),
-		ReplicaSet:           env.GetString(env.MongoReplicaSetEnv),
-		UserName:             env.GetString(env.MongoUsernameEnv),
-		Password:             env.GetString(env.MongoPasswordEnv),
-		ClusterEndpoint:      env.GetString(env.MongoClusterEndpointEnv),
-		CertPath:             env.GetString(env.MongoCertPathEnv),
-		DBName:               env.GetString(env.MongoDBNameEnv),
-		MinPoolSize:          minPoolSize,
-		MaxPoolSize:          maxPoolSize,
+		SSLVerifyCertificate: env.GetBool(MongoSSLVerifyEnv),
+		ConnectTimeout:       env.GetInt(MongoConnectTimeoutEnv),
+		QueryTimeout:         env.GetInt(MongoQueryTimeoutEnv),
+		URI:                  env.GetString(MongoURIEnv),
+		ReadPreference:       env.GetString(MongoReadPreferenceEnv),
+		RetryWrites:          env.GetString(MongoRetryWritesEnv),
+		AuthSource:           env.GetString(MongoAuthSourceEnv),
+		AuthMechanism:        env.GetString(MongoAuthMechanismEnv),
+		ReplicaSet:           env.GetString(MongoReplicaSetEnv),
+		Username:             env.GetString(MongoUsernameEnv),
+		Password:             env.GetString(MongoPasswordEnv),
+		ClusterEndpoint:      env.GetString(MongoClusterEndpointEnv),
+		CertPath:             env.GetString(MongoCertPathEnv),
+		DBName:               env.GetString(MongoDBNameEnv),
+		MinPoolSize:          env.GetInt(MongoMinPoolSizeEnv),
+		MaxPoolSize:          env.GetInt(MongoMaxPoolSizeEnv),
 	}
 }

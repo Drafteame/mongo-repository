@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
+	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_HardDelete(t *testing.T) {
@@ -22,10 +22,10 @@ func TestRepository_HardDelete(t *testing.T) {
 
 	t.Run("success hard delete", func(t *testing.T) {
 		repo := newTestRepository(d)
-
 		oid := primitive.NewObjectID()
+
 		dao := testDAO{
-			ID:         &oid,
+			ID:         oid,
 			Identifier: "test",
 			Sortable:   randomNumber(),
 		}

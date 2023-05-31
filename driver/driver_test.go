@@ -16,7 +16,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "ReadPreference",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
@@ -27,7 +27,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "AuthSource",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
@@ -38,7 +38,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "AuthMechanism",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
@@ -49,7 +49,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "ReplicaSet",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
@@ -60,7 +60,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "CertPath",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
@@ -71,7 +71,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "CertPath verify certificate",
 			conf: Config{
-				UserName:             "a",
+				Username:             "a",
 				Password:             "b",
 				ClusterEndpoint:      "c",
 				DBName:               "d",
@@ -83,7 +83,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "AuthSource and AuthMechanism and ReplicaSet",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
@@ -96,7 +96,7 @@ func Test_BuildConnectionURI(t *testing.T) {
 		{
 			name: "AuthSource and AuthMechanism, ReplicaSet and RetryWrites",
 			conf: Config{
-				UserName:        "a",
+				Username:        "a",
 				Password:        "b",
 				ClusterEndpoint: "c",
 				DBName:          "d",
