@@ -6,7 +6,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
+// DeleteMany deletes many documents from the collection. It returns the number of deleted documents and an error.
+// If the repository has timestamps enabled, it will soft delete the documents. Otherwise, it will hard delete them.
 func (r Repository[M, D, SF, UF]) DeleteMany(ctx context.Context, filters SF) (int64, error) {
+	if !r.withTimestamps {
+		return r.HardDeleteMany(ctx, filters)
+	}
+
 	bf, err := r.deleteManyFilters(filters)
 	if err != nil {
 		return 0, err

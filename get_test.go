@@ -11,7 +11,7 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
+	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_Get(t *testing.T) {

@@ -16,8 +16,14 @@ type UserDao struct {
 var _ mgorepo.DaoFiller[UserModel] = (*UserDao)(nil)
 
 func (d *UserDao) ToModel() UserModel {
+	var id string
+
+	if !d.ID.IsZero() {
+		id = d.ID.Hex()
+	}
+
 	return UserModel{
-		ID:       d.ID.Hex(),
+		ID:       id,
 		Name:     d.Name,
 		LastName: d.LastName,
 		Age:      d.Age,

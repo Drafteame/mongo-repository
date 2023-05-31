@@ -9,8 +9,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Search(t *testing.T) {

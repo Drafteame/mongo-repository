@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
+	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_Count(t *testing.T) {

@@ -1,6 +1,9 @@
-package env
+package driver
 
-import "github.com/Drafteame/mgorepo/logger"
+import (
+	"github.com/Drafteame/mgorepo/internal/env"
+	"github.com/Drafteame/mgorepo/logger"
+)
 
 const (
 	MongoURIEnv             = "MONGO_URI"
@@ -58,4 +61,8 @@ var defaultEnvs = map[string]any{
 	MongoCertPathEnv:        MongoCertPathDefault,
 	MongoDBNameEnv:          MongoDBNameDefault,
 	MongoLogLevelEnv:        MongoLogLevelDefault,
+}
+
+func init() {
+	env.SetDefaults(defaultEnvs)
 }

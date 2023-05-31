@@ -5,6 +5,12 @@ import (
 	"strconv"
 )
 
+var defaults map[string]any
+
+func init() {
+	defaults = make(map[string]any)
+}
+
 func GetString(key string) string {
 	val, exists := os.LookupEnv(key)
 	if !exists {
@@ -37,15 +43,20 @@ func GetBool(key string) bool {
 
 	boolVal, err := strconv.ParseBool(val)
 	if err != nil {
-		// TODO: debug error
 		return getDefault[bool](key)
 	}
 
 	return boolVal
 }
 
+func SetDefaults(values map[string]any) {
+	for key, val := range values {
+		defaults[key] = val
+	}
+}
+
 func getDefault[T any](key string) T {
-	val, ok := defaultEnvs[key]
+	val, ok := defaults[key]
 	if !ok {
 		return *new(T)
 	}

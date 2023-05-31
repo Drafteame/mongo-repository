@@ -11,8 +11,8 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Delete(t *testing.T) {
@@ -79,5 +79,31 @@ func TestRepository_Delete(t *testing.T) {
 		}
 
 		assert.Equal(t, primitive.DateTime(0), data.DeletedAt)
+	})
+
+	t.Run("success delete with no timestamps", func(t *testing.T) {
+		oid := primitive.NewObjectID()
+
+		data := testDAO{
+			ID:         oid,
+			Sortable:   0,
+			Identifier: "asd",
+		}
+
+		seed.InsertOne(t, db, collection, data)
+
+		repo := newTestRepository(d)
+
+		deletedCount, err := repo.Delete(context.Background(), oid.Hex())
+
+		assert.Nil(t, err)
+		assert.Equal(t, int64(1), deletedCount)
+
+		total, errCount := repo.Count(context.Background(), newSearchFilters())
+		if errCount != nil {
+			t.Fatal(errCount)
+		}
+
+		assert.Equal(t, int64(0), total)
 	})
 }

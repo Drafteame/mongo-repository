@@ -11,8 +11,8 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	"github.com/Drafteame/mgorepo/seed"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	"github.com/Drafteame/mgorepo/internal/seed"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func randomNumber() int {
@@ -152,5 +152,53 @@ func TestRepository_UpdateMany(t *testing.T) {
 		for _, doc := range allDocs {
 			ptesting.AssertEmptyDate(t, doc.UpdatedAt)
 		}
+	})
+
+	t.Run("update many with no timestamps", func(t *testing.T) {
+		daos := make([]any, 0, 100)
+
+		for i := 0; i < 100; i++ {
+			oid := primitive.NewObjectID()
+			dao := testDAO{
+				ID:         oid,
+				Identifier: "test",
+				Sortable:   randomNumber(),
+			}
+			daos = append(daos, dao)
+		}
+
+		seed.InsertMany(t, db, collection, daos...)
+
+		filters := newSearchFilters().WithSortableGreaterThan(5)
+		data := newUpdateFields().WithIdentifier("test2")
+
+		repo := newTestRepository(d).WithTimestamps(false)
+
+		expTotal, err := repo.Count(context.Background(), filters)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		updated, errUpdate := repo.UpdateMany(context.Background(), filters, data)
+
+		assert.NoError(t, errUpdate)
+		assert.Equal(t, expTotal, updated)
+
+		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters()).WithLimit(100))
+		if errFind != nil {
+			t.Fatal(errFind)
+		}
+
+		var total int64
+
+		for _, doc := range allDocs {
+			if doc.Identifier == "test2" {
+				total++
+			}
+
+			ptesting.AssertEmptyDate(t, doc.UpdatedAt)
+		}
+
+		assert.Equal(t, expTotal, total)
 	})
 }

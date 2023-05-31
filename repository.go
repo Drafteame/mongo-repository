@@ -7,7 +7,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/Drafteame/mgorepo/clock"
-	"github.com/Drafteame/mgorepo/env"
+	"github.com/Drafteame/mgorepo/driver"
+	env2 "github.com/Drafteame/mgorepo/internal/env"
 	"github.com/Drafteame/mgorepo/logger"
 )
 
@@ -41,7 +42,7 @@ func NewRepository[
 		db:             db,
 		clock:          clock.New(),
 		log:            logger.New(),
-		logLevel:       strings.ToUpper(env.GetString(env.MongoLogLevelEnv)),
+		logLevel:       strings.ToUpper(env2.GetString(driver.MongoLogLevelEnv)),
 		searchLimit:    DefaultSearchLimit,
 		collectionName: collectionName,
 		withTimestamps: true,

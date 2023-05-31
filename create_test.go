@@ -9,7 +9,7 @@ import (
 
 	"github.com/Drafteame/mgorepo/clock"
 	"github.com/Drafteame/mgorepo/driver"
-	ptesting "github.com/Drafteame/mgorepo/testing"
+	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Create(t *testing.T) {
