@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - main
-env:
-  FIREBASE_DEV_KEY: ${{ secrets.FIREBASE_DEV_KEY }}
 
 jobs:
   test:
@@ -35,20 +33,6 @@ jobs:
         run: |
           set -euo pipefail
           go test -json -v -race -cover -coverprofile=coverage.out ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
-
-      # - name: Convert out to xml
-      #   run: |
-      #     go install github.com/axw/gocov/gocov@latest
-      #     go install github.com/AlekSi/gocov-xml@latest
-      #     gocov convert coverage.out | gocov-xml > coverage.xml
-
-      # - name: Review coverage
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./coverage.xml
-      #     fail_ci_if_error: false
-      #     verbose: true
 
   lint:
     name: 💅 Lint
