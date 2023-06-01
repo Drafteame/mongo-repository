@@ -11,6 +11,30 @@ type Driver struct {
 	dbName string
 }
 
+type Option func(d *Driver)
+
+func WithClient(client *mongo.Client) Option {
+	return func(d *Driver) {
+		d.client = client
+	}
+}
+
+func WithDbName(dbName string) Option {
+	return func(d *Driver) {
+		d.dbName = dbName
+	}
+}
+
+func NewWithOptions(options ...Option) *Driver {
+	d := &Driver{}
+
+	for _, opt := range options {
+		opt(d)
+	}
+
+	return d
+}
+
 func New(ctx context.Context) (*Driver, error) {
 	return NewWithConfig(ctx, DefaultConfig())
 }
