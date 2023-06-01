@@ -1,3 +1,11 @@
+## v0.2.0 (2023-06-01)
+
+
+- feat: add mongo driver options constructor (#5)
+- * feat: add mongo driver options constructor
+
+* fix: error on empty client
+
 ## v0.1.1 (2023-05-31)
 
 
