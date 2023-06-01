@@ -25,14 +25,18 @@ func WithDbName(dbName string) Option {
 	}
 }
 
-func NewWithOptions(options ...Option) *Driver {
+func NewWithOptions(options ...Option) (*Driver, error) {
 	d := &Driver{}
 
 	for _, opt := range options {
 		opt(d)
 	}
 
-	return d
+	if d.client == nil {
+		return nil, ErrEmptyClient
+	}
+
+	return d, nil
 }
 
 func New(ctx context.Context) (*Driver, error) {
