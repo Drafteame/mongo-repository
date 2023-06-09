@@ -20,6 +20,16 @@ func (so SearchOrders) Add(name string, order int) SearchOrders {
 	return append(so, orderField{Name: name, Order: so.normalizeOrder(order)})
 }
 
+func (so SearchOrders) ToMap() map[string]int {
+	orders := map[string]int{}
+
+	for _, field := range so {
+		orders[field.Name] = field.Order
+	}
+
+	return orders
+}
+
 func (so SearchOrders) normalizeOrder(order int) int {
 	if order < -1 {
 		return -1

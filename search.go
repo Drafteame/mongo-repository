@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r Repository[M, D, SF, UF]) Search(ctx context.Context, opts SearchOptions[SF]) ([]M, error) {
+func (r Repository[M, D, SF, UF]) Search(ctx context.Context, opts SearchOptioner[SF]) ([]M, error) {
 	filters, findOpts, err := r.BuildSearchOptions(opts)
 	if err != nil {
 		r.logErrorf(err, actionSearch, "error building SearchOptions")

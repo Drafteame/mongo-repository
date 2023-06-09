@@ -25,7 +25,7 @@ func (so SearchOptions[SF]) Filters() SF {
 	return so.filters
 }
 
-func (so SearchOptions[SF]) Orders() SearchOrders {
+func (so SearchOptions[SF]) Orders() SearchOrderer {
 	return so.orders
 }
 

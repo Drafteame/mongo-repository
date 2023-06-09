@@ -41,7 +41,7 @@ func (r Repository[M, D, SF, UF]) BuildSearchFilters(opts SF) (bson.D, error) {
 // BuildSearchOptions builds filters, and mongo.FindOptions from a SearchOptions struct.
 // If no limit is given, it will default to the repository's search limit. If no orders
 // are given, it will default to ascending order by id.
-func (r Repository[M, D, SF, UF]) BuildSearchOptions(opts SearchOptions[SF]) (bson.D, *options.FindOptions, error) {
+func (r Repository[M, D, SF, UF]) BuildSearchOptions(opts SearchOptioner[SF]) (bson.D, *options.FindOptions, error) {
 	bsonFilters, err := r.BuildSearchFilters(opts.Filters())
 	if err != nil {
 		r.logErrorf(err, buildSearchOptions, "error building search filters for %s", r.collectionName)
@@ -57,17 +57,17 @@ func (r Repository[M, D, SF, UF]) BuildSearchOptions(opts SearchOptions[SF]) (bs
 	return bsonFilters, findOpts, nil
 }
 
-func (r Repository[M, D, SF, UF]) buildProjection(opts SearchOptions[SF]) bson.M {
+func (r Repository[M, D, SF, UF]) buildProjection(opts SearchOptioner[SF]) bson.M {
 	projection := bson.M{}
 
-	for field, val := range opts.projection {
+	for field, val := range opts.Projection() {
 		projection[field] = val
 	}
 
 	return projection
 }
 
-func (r Repository[M, D, SF, UF]) buildFindOptions(opts SearchOptions[SF]) (*options.FindOptions, error) {
+func (r Repository[M, D, SF, UF]) buildFindOptions(opts SearchOptioner[SF]) (*options.FindOptions, error) {
 	bsonOrders, err := r.BuildSearchOrders(opts.Orders())
 	if err != nil {
 		return nil, err
@@ -121,19 +121,21 @@ func (r Repository[M, D, SF, UF]) BuildUpdateFields(fields UF) (bson.D, error) {
 	return bsonFields, nil
 }
 
-func (r Repository[M, D, SF, UF]) BuildSearchOrders(so SearchOrders) (bson.D, error) {
-	if len(so) == 0 {
+func (r Repository[M, D, SF, UF]) BuildSearchOrders(so SearchOrderer) (bson.D, error) {
+	ordersMap := so.ToMap()
+
+	if len(ordersMap) == 0 {
 		return bson.D{{Key: "_id", Value: 1}}, nil
 	}
 
 	var orders bson.D
 
-	for _, field := range so {
-		if field.Order == 0 {
+	for field, order := range ordersMap {
+		if order == 0 {
 			continue
 		}
 
-		orders = append(orders, bson.E{Key: field.Name, Value: field.Order})
+		orders = append(orders, bson.E{Key: field, Value: order})
 	}
 
 	return orders, nil

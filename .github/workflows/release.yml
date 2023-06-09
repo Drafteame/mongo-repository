@@ -43,7 +43,7 @@ jobs:
           python -m pip install -U commitizen
           cz bump --changelog --yes
           export REV=`cz version --project`
-          echo "::set-output name=version::$REV"
+          echo "version=$REV" >> $GITHUB_OUTPUT
 
       - name: Push changes
         uses: Woile/github-push-action@master
