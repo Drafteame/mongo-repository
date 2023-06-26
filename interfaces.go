@@ -32,3 +32,15 @@ type DaoFiller[M Model] interface {
 type SearchFilters any
 
 type UpdateFields any
+
+type SearchOrderer interface {
+	ToMap() map[string]int
+}
+
+type SearchOptioner[SF SearchFilters] interface {
+	Filters() SF
+	Orders() SearchOrderer
+	Limit() int64
+	Skip() int64
+	Projection() map[string]int
+}

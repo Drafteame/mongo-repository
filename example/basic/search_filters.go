@@ -6,6 +6,7 @@ type UserSearchFilters struct {
 	Name           *string
 	LastName       *string
 	GreaterThanAge *int
+	IDs            []string
 }
 
 func buildNameFilter(filters UserSearchFilters) (*bson.E, error) {
@@ -16,6 +17,17 @@ func buildNameFilter(filters UserSearchFilters) (*bson.E, error) {
 	return &bson.E{
 		Key:   "name",
 		Value: *filters.Name,
+	}, nil
+}
+
+func buildIDsFilter(filters UserSearchFilters) (*bson.E, error) {
+	if len(filters.IDs) == 0 {
+		return nil, nil
+	}
+
+	return &bson.E{
+		Key:   "_id",
+		Value: bson.M{"$in": filters.IDs},
 	}, nil
 }
 

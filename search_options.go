@@ -13,6 +13,8 @@ type SearchOptions[SF SearchFilters] struct {
 	projection map[string]int
 }
 
+var _ SearchOptioner[SearchFilters] = SearchOptions[SearchFilters]{}
+
 func NewSearchOptions[SF SearchFilters](filters SF) SearchOptions[SF] {
 	return SearchOptions[SF]{
 		filters: filters,
@@ -25,7 +27,7 @@ func (so SearchOptions[SF]) Filters() SF {
 	return so.filters
 }
 
-func (so SearchOptions[SF]) Orders() SearchOrders {
+func (so SearchOptions[SF]) Orders() SearchOrderer {
 	return so.orders
 }
 

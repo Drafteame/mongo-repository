@@ -26,6 +26,7 @@ func NewUserRepository(db mgorepo.Driver) UserRepository {
 				buildNameFilter,
 				buildLastNameFilter,
 				buildGreaterThanAgeFilter,
+				buildIDsFilter,
 			},
 			[]func(UserUpdateFields) (*bson.E, error){
 				buildNameUpdate,

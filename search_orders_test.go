@@ -31,3 +31,19 @@ func TestSearchOrders_Add(t *testing.T) {
 		t.Errorf("Add() should add element with order %d, got %d", OrderAsc, so[0].Order)
 	}
 }
+
+func TestSearchOrders_ToMap(t *testing.T) {
+	so := NewSearchOrders()
+
+	so = so.Add("name", OrderAsc)
+
+	orders := so.ToMap()
+
+	if len(orders) != 1 {
+		t.Errorf("ToMap() should return map with one element, got %d elements", len(orders))
+	}
+
+	if orders["name"] != OrderAsc {
+		t.Errorf("ToMap() should return map with element 'name' with order %d, got %d", OrderAsc, orders["name"])
+	}
+}
