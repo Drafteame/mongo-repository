@@ -1,3 +1,21 @@
+## v0.3.0 (2023-06-26)
+
+
+- build(deps): bump go.mongodb.org/mongo-driver from 1.11.6 to 1.12.0 (#8)
+- Bumps [go.mongodb.org/mongo-driver](https://github.com/mongodb/mongo-go-driver) from 1.11.6 to 1.12.0.
+- [Release notes](https://github.com/mongodb/mongo-go-driver/releases)
+- [Commits](https://github.com/mongodb/mongo-go-driver/compare/v1.11.6...v1.12.0)
+
+---
+updated-dependencies:
+- dependency-name: go.mongodb.org/mongo-driver
+  dependency-type: direct:production
+  update-type: version-update:semver-minor
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
 ## v0.2.0 (2023-06-01)
 
 
