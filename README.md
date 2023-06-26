@@ -42,7 +42,7 @@ func NewRepository[
 	collectionName string,
 	filterBuilders []func(SF) (*bson.E, error),
 	updateBuilders []func(UF) (*bson.E, error),
-) Repository[M, D, SF, SO, UF] {}
+) Repository[M, D, SF, SORD, SO, UF] {}
 ```
 
 ##### Generic constraints

@@ -9,7 +9,7 @@ import (
 
 // Delete deletes a document by id. If the repository is configured to not use timestamps, this operation will be
 // applied as a hard delete.
-func (r Repository[M, D, SF, SO, UF]) Delete(ctx context.Context, id string) (int64, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) Delete(ctx context.Context, id string) (int64, error) {
 	if !r.withTimestamps {
 		return r.HardDelete(ctx, id)
 	}

@@ -9,12 +9,13 @@ import (
 
 const collection = "model"
 
-func newTestRepository(driver Driver) Repository[testModel, testDAO, searchFilters, SearchOrders, updateFields] {
+func newTestRepository(driver Driver) Repository[testModel, testDAO, searchFilters, SearchOrders, SearchOptions[searchFilters, SearchOrders], updateFields] {
 	return NewRepository[
 		testModel,
 		testDAO,
 		searchFilters,
 		SearchOrders,
+		SearchOptions[searchFilters, SearchOrders],
 		updateFields,
 	](
 		driver,

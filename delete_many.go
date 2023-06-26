@@ -8,7 +8,7 @@ import (
 
 // DeleteMany deletes many documents from the collection. It returns the number of deleted documents and an error.
 // If the repository has timestamps enabled, it will soft delete the documents. Otherwise, it will hard delete them.
-func (r Repository[M, D, SF, SO, UF]) DeleteMany(ctx context.Context, filters SF) (int64, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) DeleteMany(ctx context.Context, filters SF) (int64, error) {
 	if !r.withTimestamps {
 		return r.HardDeleteMany(ctx, filters)
 	}
@@ -38,7 +38,7 @@ func (r Repository[M, D, SF, SO, UF]) DeleteMany(ctx context.Context, filters SF
 	return res.ModifiedCount, nil
 }
 
-func (r Repository[M, D, SF, SO, UF]) deleteManyFilters(filters SF) (bson.D, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) deleteManyFilters(filters SF) (bson.D, error) {
 	if r.IsSearchFiltersEmpty(filters) {
 		r.logErrorf(ErrEmptyFilters, actionDeleteMany, "error deleting many %s document", r.collectionName)
 		return nil, ErrEmptyFilters
