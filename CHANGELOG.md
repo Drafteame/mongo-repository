@@ -1,3 +1,11 @@
+## v0.4.0 (2023-06-26)
+
+
+- feat: add search interfaces to be able to replace defined structs (#7)
+- * feat: add search interfaces to be able to replace defined structs
+
+* chore: add interface assertion to builtin structs
+
 ## v0.3.0 (2023-06-26)
 
 
