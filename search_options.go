@@ -5,60 +5,55 @@ const (
 	FieldRemove = 0
 )
 
-type SearchOptions[SF SearchFilters] struct {
+type SearchOptions[SF SearchFilters, SO SearchOrderer] struct {
 	filters    SF
-	orders     SearchOrders
+	orders     SO
 	limit      int64
 	skip       int64
 	projection map[string]int
 }
 
-var _ SearchOptioner[SearchFilters] = SearchOptions[SearchFilters]{}
+var _ SearchOptioner[SearchFilters, SearchOrderer] = SearchOptions[SearchFilters, SearchOrderer]{}
 
-func NewSearchOptions[SF SearchFilters](filters SF) SearchOptions[SF] {
-	return SearchOptions[SF]{
+func NewSearchOptions[SF SearchFilters, SO SearchOrderer](filters SF, orders SO) SearchOptions[SF, SO] {
+	return SearchOptions[SF, SO]{
 		filters: filters,
-		orders:  NewSearchOrders(),
+		orders:  orders,
 		limit:   DefaultSearchLimit,
 	}
 }
 
-func (so SearchOptions[SF]) Filters() SF {
+func (so SearchOptions[SF, SO]) Filters() SF {
 	return so.filters
 }
 
-func (so SearchOptions[SF]) Orders() SearchOrderer {
+func (so SearchOptions[SF, SO]) Orders() SO {
 	return so.orders
 }
 
-func (so SearchOptions[SF]) Limit() int64 {
+func (so SearchOptions[SF, SO]) Limit() int64 {
 	return so.limit
 }
 
-func (so SearchOptions[SF]) Skip() int64 {
+func (so SearchOptions[SF, SO]) Skip() int64 {
 	return so.skip
 }
 
-func (so SearchOptions[SF]) Projection() map[string]int {
+func (so SearchOptions[SF, SO]) Projection() map[string]int {
 	return so.projection
 }
 
-func (so SearchOptions[SF]) WithOrder(field string, order int) SearchOptions[SF] {
-	so.orders = so.orders.Add(field, order)
-	return so
-}
-
-func (so SearchOptions[SF]) WithLimit(limit int64) SearchOptions[SF] {
+func (so SearchOptions[SF, SO]) WithLimit(limit int64) SearchOptions[SF, SO] {
 	so.limit = limit
 	return so
 }
 
-func (so SearchOptions[SF]) WithSkip(skip int64) SearchOptions[SF] {
+func (so SearchOptions[SF, SO]) WithSkip(skip int64) SearchOptions[SF, SO] {
 	so.skip = skip
 	return so
 }
 
-func (so SearchOptions[SF]) Project(field string, project int) SearchOptions[SF] {
+func (so SearchOptions[SF, SO]) WithProject(field string, project int) SearchOptions[SF, SO] {
 	if field == "" {
 		return so
 	}
@@ -72,19 +67,19 @@ func (so SearchOptions[SF]) Project(field string, project int) SearchOptions[SF]
 	return so
 }
 
-func (so SearchOptions[SF]) ProjectFields(project map[string]int) SearchOptions[SF] {
+func (so SearchOptions[SF, SO]) WithProjectFields(project map[string]int) SearchOptions[SF, SO] {
 	if project == nil {
 		return so
 	}
 
 	for field, val := range project {
-		so = so.Project(field, val)
+		so = so.WithProject(field, val)
 	}
 
 	return so
 }
 
-func (so SearchOptions[SF]) normalizeProjection(val int) int {
+func (so SearchOptions[SF, SO]) normalizeProjection(val int) int {
 	if val <= 0 {
 		return 0
 	}

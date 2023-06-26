@@ -8,7 +8,7 @@ import (
 )
 
 // Create creates a new record on the collection based on the model.
-func (r Repository[M, D, SF, UF]) Create(ctx context.Context, model M) (M, error) {
+func (r Repository[M, D, SF, SO, UF]) Create(ctx context.Context, model M) (M, error) {
 	var zeroM M
 
 	data, err := r.createBuildData(model)
@@ -33,7 +33,7 @@ func (r Repository[M, D, SF, UF]) Create(ctx context.Context, model M) (M, error
 	return resModel, err
 }
 
-func (r Repository[M, D, SF, UF]) createBuildModel(data bson.M) (M, error) {
+func (r Repository[M, D, SF, SO, UF]) createBuildModel(data bson.M) (M, error) {
 	var zeroM M
 
 	dao := new(D)
@@ -54,7 +54,7 @@ func (r Repository[M, D, SF, UF]) createBuildModel(data bson.M) (M, error) {
 	return filler.ToModel(), nil
 }
 
-func (r Repository[M, D, SF, UF]) createBuildData(model M) (bson.M, error) {
+func (r Repository[M, D, SF, SO, UF]) createBuildData(model M) (bson.M, error) {
 	dao := any(new(D)).(DaoFiller[M])
 
 	if errDao := dao.FromModel(model); errDao != nil {

@@ -34,7 +34,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters().WithIdentifier("identifier"))
+		opt := NewSearchOptions(newSearchFilters().WithIdentifier("identifier"), NewSearchOrders())
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -44,7 +44,7 @@ func TestRepository_Search(t *testing.T) {
 	t.Run("empty search", func(t *testing.T) {
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters())
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders())
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -64,7 +64,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).WithLimit(1)
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders()).WithLimit(1)
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -92,7 +92,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).WithSkip(1)
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders()).WithSkip(1)
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -121,7 +121,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).WithOrder(sortableField, 1)
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders().Add(sortableField, 1))
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -151,7 +151,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).WithOrder(sortableField, -1)
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders().Add(sortableField, -1))
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -183,7 +183,7 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters())
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders())
 		models, err := repo.Search(context.Background(), opt)
 
 		assert.NoError(t, err)
@@ -211,9 +211,8 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).
-			Project(sortableField, FieldAdd).
-			WithOrder(sortableField, 1)
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders().Add(sortableField, 1)).
+			WithProject(sortableField, FieldAdd)
 
 		models, err := repo.Search(context.Background(), opt)
 
@@ -253,9 +252,8 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).
-			Project(sortableField, FieldRemove).
-			WithOrder(sortableField, OrderAsc)
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders().Add(sortableField, OrderAsc)).
+			WithProject(sortableField, FieldRemove)
 
 		models, err := repo.Search(context.Background(), opt)
 
@@ -300,13 +298,12 @@ func TestRepository_Search(t *testing.T) {
 
 		repo := newTestRepository(d)
 
-		opt := NewSearchOptions(newSearchFilters()).
-			ProjectFields(map[string]int{
+		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders().Add(sortableField, 1)).
+			WithProjectFields(map[string]int{
 				idField:         FieldRemove,
 				identifierField: FieldAdd,
 				sortableField:   FieldAdd,
-			}).
-			WithOrder(sortableField, 1)
+			})
 
 		models, err := repo.Search(context.Background(), opt)
 

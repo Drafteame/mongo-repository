@@ -60,7 +60,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.NoError(t, errUpdate)
 		assert.Equal(t, total, updated)
 
-		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters()).WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters(), NewSearchOrders()).WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}
@@ -105,7 +105,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.ErrorIs(t, errUpdate, ErrEmptyUpdate)
 		assert.Equal(t, int64(0), updated)
 
-		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters()).WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters(), NewSearchOrders()).WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}
@@ -144,7 +144,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.ErrorIs(t, errUpdate, ErrEmptyFilters)
 		assert.Equal(t, int64(0), updated)
 
-		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters()).WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters(), NewSearchOrders()).WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}
@@ -184,7 +184,7 @@ func TestRepository_UpdateMany(t *testing.T) {
 		assert.NoError(t, errUpdate)
 		assert.Equal(t, expTotal, updated)
 
-		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters()).WithLimit(100))
+		allDocs, errFind := repo.Search(context.Background(), NewSearchOptions(newSearchFilters(), NewSearchOrders()).WithLimit(100))
 		if errFind != nil {
 			t.Fatal(errFind)
 		}
