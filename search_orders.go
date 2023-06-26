@@ -12,6 +12,8 @@ type orderField struct {
 
 type SearchOrders []orderField
 
+var _ SearchOrderer = SearchOrders{}
+
 func NewSearchOrders() SearchOrders {
 	return SearchOrders{}
 }

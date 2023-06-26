@@ -13,6 +13,8 @@ type SearchOptions[SF SearchFilters] struct {
 	projection map[string]int
 }
 
+var _ SearchOptioner[SearchFilters] = SearchOptions[SearchFilters]{}
+
 func NewSearchOptions[SF SearchFilters](filters SF) SearchOptions[SF] {
 	return SearchOptions[SF]{
 		filters: filters,
