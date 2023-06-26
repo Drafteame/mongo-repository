@@ -9,7 +9,7 @@ import (
 // the filters, or an error if one occurs. If no filters are given, it will return nil.
 // If the deletedAtField is not explicitly set, it will filter out deleted instances if
 // withTimestamps is set to true.
-func (r Repository[M, D, SF, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error) {
 	filters := bson.D{}
 
 	deletedFilter := false
@@ -41,7 +41,7 @@ func (r Repository[M, D, SF, SO, UF]) BuildSearchFilters(opts SF) (bson.D, error
 // BuildSearchOptions builds filters, and mongo.FindOptions from a SearchOptions struct.
 // If no limit is given, it will default to the repository's search limit. If no orders
 // are given, it will default to ascending order by id.
-func (r Repository[M, D, SF, SO, UF]) BuildSearchOptions(opts SearchOptioner[SF, SO]) (bson.D, *options.FindOptions, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOptions(opts SO) (bson.D, *options.FindOptions, error) {
 	bsonFilters, err := r.BuildSearchFilters(opts.Filters())
 	if err != nil {
 		r.logErrorf(err, buildSearchOptions, "error building search filters for %s", r.collectionName)
@@ -57,7 +57,7 @@ func (r Repository[M, D, SF, SO, UF]) BuildSearchOptions(opts SearchOptioner[SF,
 	return bsonFilters, findOpts, nil
 }
 
-func (r Repository[M, D, SF, SO, UF]) buildProjection(opts SearchOptioner[SF, SO]) bson.M {
+func (r Repository[M, D, SF, SORD, SO, UF]) buildProjection(opts SO) bson.M {
 	projection := bson.M{}
 
 	for field, val := range opts.Projection() {
@@ -67,7 +67,7 @@ func (r Repository[M, D, SF, SO, UF]) buildProjection(opts SearchOptioner[SF, SO
 	return projection
 }
 
-func (r Repository[M, D, SF, SO, UF]) buildFindOptions(opts SearchOptioner[SF, SO]) (*options.FindOptions, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) buildFindOptions(opts SO) (*options.FindOptions, error) {
 	bsonOrders, err := r.BuildSearchOrders(opts.Orders())
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func (r Repository[M, D, SF, SO, UF]) buildFindOptions(opts SearchOptioner[SF, S
 // BuildUpdateFields builds the update fields from the given options and returns a bson.D
 // that can be used to update the document. If repository is configured with timestamps, it
 // will automatically add the updatedAtField to the update fields.
-func (r Repository[M, D, SF, SO, UF]) BuildUpdateFields(fields UF) (bson.D, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) BuildUpdateFields(fields UF) (bson.D, error) {
 	bsonFields := bson.D{}
 
 	for _, builder := range r.updateBuilders {
@@ -121,7 +121,7 @@ func (r Repository[M, D, SF, SO, UF]) BuildUpdateFields(fields UF) (bson.D, erro
 	return bsonFields, nil
 }
 
-func (r Repository[M, D, SF, SO, UF]) BuildSearchOrders(so SearchOrderer) (bson.D, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOrders(so SearchOrderer) (bson.D, error) {
 	ordersMap := so.ToMap()
 
 	if len(ordersMap) == 0 {

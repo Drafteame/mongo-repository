@@ -36,7 +36,7 @@ func searchExample(d mgorepo.Driver) {
 	age := 21
 
 	orders := NewSearchOrders()
-	opts := mgorepo.NewSearchOptions(UserSearchFilters{GreaterThanAge: &age}, orders)
+	opts := NewSearchOptions(UserSearchFilters{GreaterThanAge: &age}, orders)
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -57,7 +57,7 @@ func searchAndSortExample(d mgorepo.Driver) {
 	age := 21
 
 	orders := NewSearchOrders().Add("age", mgorepo.OrderDesc)
-	opts := mgorepo.NewSearchOptions(UserSearchFilters{GreaterThanAge: &age}, orders)
+	opts := NewSearchOptions(UserSearchFilters{GreaterThanAge: &age}, orders)
 
 	users, errSearch := repo.Search(context.Background(), opts)
 	if errSearch != nil {
@@ -78,7 +78,7 @@ func searchOneExample(d mgorepo.Driver) {
 	name := "name_1"
 
 	orders := NewSearchOrders()
-	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}, orders).
+	opts := NewSearchOptions(UserSearchFilters{Name: &name}, orders).
 		WithLimit(1)
 
 	user, errSearch := repo.Search(context.Background(), opts)
@@ -98,7 +98,7 @@ func getExample(d mgorepo.Driver) {
 	name := "name_1"
 
 	orders := NewSearchOrders()
-	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}, orders).
+	opts := NewSearchOptions(UserSearchFilters{Name: &name}, orders).
 		WithLimit(1)
 
 	users, errSearch := repo.Search(context.Background(), opts)
@@ -124,7 +124,7 @@ func updateExample(d mgorepo.Driver) {
 	name := "name_1"
 
 	orders := NewSearchOrders()
-	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}, orders).
+	opts := NewSearchOptions(UserSearchFilters{Name: &name}, orders).
 		WithLimit(1)
 
 	users, errSearch := repo.Search(context.Background(), opts)
@@ -161,7 +161,7 @@ func deleteExample(d mgorepo.Driver) {
 	name := "name_1"
 
 	orders := NewSearchOrders()
-	opts := mgorepo.NewSearchOptions(UserSearchFilters{Name: &name}, orders).
+	opts := NewSearchOptions(UserSearchFilters{Name: &name}, orders).
 		WithLimit(1)
 
 	users, errSearch := repo.Search(context.Background(), opts)

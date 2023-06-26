@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r Repository[M, D, SF, SO, UF]) Update(ctx context.Context, id string, fields UF) (int64, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) Update(ctx context.Context, id string, fields UF) (int64, error) {
 	filters, errFilters := r.updateFilters(id)
 	if errFilters != nil {
 		r.logErrorf(errFilters, actionUpdate, "error updating %s document", r.collectionName)
@@ -32,7 +32,7 @@ func (r Repository[M, D, SF, SO, UF]) Update(ctx context.Context, id string, fie
 	return res.ModifiedCount, nil
 }
 
-func (r Repository[M, D, SF, SO, UF]) updateFilters(id string) (bson.D, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) updateFilters(id string) (bson.D, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, errors.Join(ErrInvalidIDFilter, err)
@@ -45,7 +45,7 @@ func (r Repository[M, D, SF, SO, UF]) updateFilters(id string) (bson.D, error) {
 	return filters, nil
 }
 
-func (r Repository[M, D, SF, SO, UF]) updateData(fields UF, allowEmpty bool) (bson.D, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) updateData(fields UF, allowEmpty bool) (bson.D, error) {
 	if !allowEmpty && r.IsUpdateFieldsEmpty(fields) {
 		return nil, ErrEmptyUpdate
 	}

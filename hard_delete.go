@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r Repository[M, D, SF, SO, UF]) HardDelete(ctx context.Context, id string) (int64, error) {
+func (r Repository[M, D, SF, SORD, SO, UF]) HardDelete(ctx context.Context, id string) (int64, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		r.logErrorf(err, actionHardDelete, "error converting %s to ObjectID", id)
