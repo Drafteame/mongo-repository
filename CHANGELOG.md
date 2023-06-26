@@ -1,3 +1,10 @@
+## v0.4.2 (2023-06-26)
+
+
+- Merge pull request #10 from Drafteame/reafactor/add-so-as-generic-type
+- refactor: decouple search signature and generify search options type
+- refactor: decouple search signature and generify search options type
+
 ## v0.4.1 (2023-06-26)
 
 
