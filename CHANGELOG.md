@@ -1,3 +1,10 @@
+## v0.4.1 (2023-06-26)
+
+
+- Merge pull request #9 from Drafteame/reafactor/add-so-as-generic-type
+- refactor: add search orders to search options as generic type
+- refactor: add search orders to search options as generic type
+
 ## v0.4.0 (2023-06-26)
 
 
