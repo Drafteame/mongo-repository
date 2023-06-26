@@ -18,6 +18,7 @@ func TestNewRepository(t *testing.T) {
 		testModel,
 		testDAO,
 		searchFilters,
+		SearchOrders,
 		updateFields,
 	](
 		d,

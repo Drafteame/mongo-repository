@@ -37,9 +37,9 @@ type SearchOrderer interface {
 	ToMap() map[string]int
 }
 
-type SearchOptioner[SF SearchFilters] interface {
+type SearchOptioner[SF SearchFilters, O SearchOrderer] interface {
 	Filters() SF
-	Orders() SearchOrderer
+	Orders() O
 	Limit() int64
 	Skip() int64
 	Projection() map[string]int
