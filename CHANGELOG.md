@@ -1,3 +1,10 @@
+## v0.4.3 (2023-06-29)
+
+
+- Merge pull request #11 from Drafteame/fix/remove_search_limit_in_constructor
+- fix: remove search limit from search options constructor
+- fix: remove search limit from search options constructor
+
 ## v0.4.2 (2023-06-26)
 
 
