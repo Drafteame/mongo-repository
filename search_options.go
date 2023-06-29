@@ -19,7 +19,6 @@ func NewSearchOptions[SF SearchFilters, SO SearchOrderer](filters SF, orders SO)
 	return SearchOptions[SF, SO]{
 		filters: filters,
 		orders:  orders,
-		limit:   DefaultSearchLimit,
 	}
 }
 
