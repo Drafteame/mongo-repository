@@ -125,7 +125,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOrders(so SearchOrderer) 
 	ordersMap := so.ToMap()
 
 	if len(ordersMap) == 0 {
-		return bson.D{{Key: "_id", Value: 1}}, nil
+		return nil, nil
 	}
 
 	var orders bson.D
