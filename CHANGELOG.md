@@ -1,3 +1,10 @@
+## v0.4.4 (2023-09-12)
+
+
+- Merge pull request #17 from Drafteame/feat/remove-default-sort-by-id
+- fix: remove unnecesary default sort
+- fix: remove unnecesary default sort
+
 ## v0.4.3 (2023-06-29)
 
 
