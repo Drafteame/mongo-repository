@@ -18,6 +18,7 @@ type Repository[M Model, D Dao, SF SearchFilters, SORD SearchOrderer, SO SearchO
 	log            Logger
 	logLevel       string
 	searchLimit    int
+	maxSearchLimit int
 	collectionName string
 	withTimestamps bool
 	updatedAtField string
@@ -46,6 +47,7 @@ func NewRepository[
 		log:            logger.New(),
 		logLevel:       strings.ToUpper(env.GetString(driver.MongoLogLevelEnv)),
 		searchLimit:    DefaultSearchLimit,
+		maxSearchLimit: MaxSearchLimit,
 		collectionName: collectionName,
 		withTimestamps: true,
 		updatedAtField: DefaultUpdatedAtField,
