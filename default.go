@@ -4,5 +4,5 @@ const (
 	DefaultCreatedAtField = "createdAt"
 	DefaultUpdatedAtField = "updatedAt"
 	DefaultDeletedAtField = "deletedAt"
-	DefaultSearchLimit    = 10
+	DefaultSearchLimit    = 5000
 )
