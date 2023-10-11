@@ -79,7 +79,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) buildFindOptions(opts SO) (*options.
 		findOpts.SetLimit(int64(r.searchLimit))
 	}
 
-	if opts.Limit() <= int64(r.searchLimit) {
+	if opts.Limit() <= int64(r.maxSearchLimit) {
 		findOpts.SetLimit(opts.Limit())
 	} else {
 		findOpts.SetLimit(int64(r.maxSearchLimit))
