@@ -1,3 +1,12 @@
+## v0.5.0 (2023-10-11)
+
+
+- Merge pull request #18 from Drafteame/feat/force-search-limit
+- feat: force search limit
+- fix: wrong variable
+- fix: add max search limit variable
+- feat: force search limit
+
 ## v0.4.4 (2023-09-12)
 
 
