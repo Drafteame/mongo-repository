@@ -75,10 +75,14 @@ func (r Repository[M, D, SF, SORD, SO, UF]) buildFindOptions(opts SO) (*options.
 
 	findOpts := options.Find()
 
-	if opts.Limit() > 0 {
+	if opts.Limit() <= 0 {
+		findOpts.SetLimit(int64(r.searchLimit))
+	}
+
+	if opts.Limit() <= int64(r.maxSearchLimit) {
 		findOpts.SetLimit(opts.Limit())
 	} else {
-		findOpts.SetLimit(int64(r.searchLimit))
+		findOpts.SetLimit(int64(r.maxSearchLimit))
 	}
 
 	if opts.Skip() > 0 {
@@ -125,7 +129,7 @@ func (r Repository[M, D, SF, SORD, SO, UF]) BuildSearchOrders(so SearchOrderer) 
 	ordersMap := so.ToMap()
 
 	if len(ordersMap) == 0 {
-		return bson.D{{Key: "_id", Value: 1}}, nil
+		return nil, nil
 	}
 
 	var orders bson.D
