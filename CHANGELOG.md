@@ -1,3 +1,13 @@
+## v0.7.1 (2024-03-18)
+
+
+- deps: upgrade (#22)
+- * deps: upgrade to fix security issues
+
+* ci: upgrade precommit hooks
+
+* ci: change test formatter
+
 ## v0.7.0 (2024-03-18)
 
 
