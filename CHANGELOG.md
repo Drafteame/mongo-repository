@@ -1,3 +1,36 @@
+## v0.7.0 (2024-03-18)
+
+
+- build(deps): bump goreleaser/goreleaser-action from 4 to 5 (#16)
+- Bumps [goreleaser/goreleaser-action](https://github.com/goreleaser/goreleaser-action) from 4 to 5.
+- [Release notes](https://github.com/goreleaser/goreleaser-action/releases)
+- [Commits](https://github.com/goreleaser/goreleaser-action/compare/v4...v5)
+
+---
+updated-dependencies:
+- dependency-name: goreleaser/goreleaser-action
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+- build(deps): bump actions/checkout from 3 to 4 (#15)
+- Bumps [actions/checkout](https://github.com/actions/checkout) from 3 to 4.
+- [Release notes](https://github.com/actions/checkout/releases)
+- [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)
+- [Commits](https://github.com/actions/checkout/compare/v3...v4)
+
+---
+updated-dependencies:
+- dependency-name: actions/checkout
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
 ## v0.6.0 (2024-03-18)
 
 
