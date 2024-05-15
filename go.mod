@@ -3,7 +3,7 @@ module github.com/Drafteame/mgorepo
 go 1.21
 
 require (
-	github.com/fatih/color v1.16.0
+	github.com/fatih/color v1.17.0
 	github.com/magefile/mage v1.15.0
 	github.com/orlangure/gnomock v0.30.0
 	github.com/stretchr/testify v1.9.0
