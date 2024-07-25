@@ -78,6 +78,12 @@ func (so SearchOptions[SF, SO]) WithProjectFields(project map[string]int) Search
 	return so
 }
 
+func (so SearchOptions[SF, SO]) WithSearchOrders(orders SO) SearchOptions[SF, SO] {
+	so.orders = orders
+
+	return so
+}
+
 func (so SearchOptions[SF, SO]) normalizeProjection(val int) int {
 	if val <= 0 {
 		return 0
