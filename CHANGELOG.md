@@ -1,3 +1,10 @@
+## v0.8.0 (2024-07-25)
+
+
+- Merge pull request #33 from Drafteame/feat/add-with-search-orders
+- feat: add withSearchOrders
+- feat: add withSearchOrders
+
 ## v0.7.3 (2024-03-18)
 
 
