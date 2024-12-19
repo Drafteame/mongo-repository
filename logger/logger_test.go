@@ -29,7 +29,7 @@ func TestNew(t *testing.T) {
 	})
 
 	t.Run("should create new logger with clock", func(t *testing.T) {
-		c := mocks.NewClock(t)
+		c := mocks.NewMockClock(t)
 		logger := New().SetClock(c)
 
 		assert.NotNil(t, logger)
@@ -41,7 +41,7 @@ func TestNew(t *testing.T) {
 func TestLogger_printMessages(t *testing.T) {
 	t.Run("should print debug log", func(t *testing.T) {
 		now := time.Now()
-		c := mocks.NewClock(t)
+		c := mocks.NewMockClock(t)
 		c.On("Now").Return(now)
 
 		tl := NewTest(t).SetClock(c)
@@ -66,7 +66,7 @@ func TestLogger_printMessages(t *testing.T) {
 
 	t.Run("should print error log", func(t *testing.T) {
 		now := time.Now()
-		c := mocks.NewClock(t)
+		c := mocks.NewMockClock(t)
 		c.On("Now").Return(now)
 
 		tl := NewTest(t).SetClock(c)

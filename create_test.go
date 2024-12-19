@@ -8,19 +8,17 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/Drafteame/mgorepo/clock"
-	"github.com/Drafteame/mgorepo/driver"
 	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Create(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
-
-	c := clock.NewTest(time.Now()).ForceUTC()
+	t.Parallel()
 
 	t.Run("success create", func(t *testing.T) {
+		t.Parallel()
+		d := getTestDriver(t)
+		c := clock.NewTest(time.Now()).ForceUTC()
+
 		expected := testModel{
 			Identifier: "identifier",
 		}
@@ -35,6 +33,11 @@ func TestRepository_Create(t *testing.T) {
 	})
 
 	t.Run("success create with no timestamps", func(t *testing.T) {
+		t.Parallel()
+
+		d := getTestDriver(t)
+		c := clock.NewTest(time.Now()).ForceUTC()
+
 		expected := testModel{
 			Identifier: "identifier",
 		}

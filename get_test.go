@@ -10,19 +10,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/Drafteame/mgorepo/clock"
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_Get(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
-
-	db := d.Client().Database(d.DbName())
+	t.Parallel()
 
 	t.Run("get error not found", func(t *testing.T) {
+		t.Parallel()
+
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
@@ -45,6 +44,11 @@ func TestRepository_Get(t *testing.T) {
 	})
 
 	t.Run("get error not found on deleted doc", func(t *testing.T) {
+		t.Parallel()
+
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 
@@ -68,6 +72,11 @@ func TestRepository_Get(t *testing.T) {
 	})
 
 	t.Run("get success", func(t *testing.T) {
+		t.Parallel()
+
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		oid := primitive.NewObjectID()
 		c := clock.NewTest(time.Now()).ForceUTC()
 

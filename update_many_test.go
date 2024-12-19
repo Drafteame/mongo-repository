@@ -10,7 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/Drafteame/mgorepo/clock"
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
@@ -20,14 +19,10 @@ func randomNumber() int {
 }
 
 func TestRepository_UpdateMany(t *testing.T) {
-	d, errDrvier := driver.NewTest(t)
-	if errDrvier != nil {
-		t.Fatal(errDrvier)
-	}
-
-	db := d.Client().Database(d.DbName())
-
 	t.Run("success update many", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		daos := make([]any, 0, 100)
@@ -78,6 +73,9 @@ func TestRepository_UpdateMany(t *testing.T) {
 	})
 
 	t.Run("update many error no fields to update", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		daos := make([]any, 0, 100)
@@ -116,6 +114,9 @@ func TestRepository_UpdateMany(t *testing.T) {
 	})
 
 	t.Run("update many error no filters", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		daos := make([]any, 0, 100)
@@ -155,6 +156,9 @@ func TestRepository_UpdateMany(t *testing.T) {
 	})
 
 	t.Run("update many with no timestamps", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		daos := make([]any, 0, 100)
 
 		for i := 0; i < 100; i++ {

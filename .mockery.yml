@@ -1,2 +1,17 @@
-inpackage: False
-dry-run: False
+all: true
+dir: '{{.InterfaceDir}}/mocks'
+outpkg: mocks
+recursive: false
+with-expecter: true
+
+exclude:
+  - node_modules
+  - vendor
+  - .git
+  - .husky
+  - .github
+  - .idea
+  - .vscode
+
+packages:
+  github.com/Drafteame/mgorepo/logger: {}

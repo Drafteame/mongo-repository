@@ -8,19 +8,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_HardDelete(t *testing.T) {
-	d, errDriver := driver.NewTest(t)
-	if errDriver != nil {
-		t.Fatal(errDriver)
-	}
-
-	db := d.Client().Database(d.DbName())
+	t.Parallel()
 
 	t.Run("success hard delete", func(t *testing.T) {
+		t.Parallel()
+
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		repo := newTestRepository(d)
 		oid := primitive.NewObjectID()
 
@@ -48,6 +47,9 @@ func TestRepository_HardDelete(t *testing.T) {
 	})
 
 	t.Run("error hard delete with invalid id", func(t *testing.T) {
+		t.Parallel()
+
+		d := getTestDriver(t)
 		repo := newTestRepository(d)
 
 		deleted, err := repo.HardDelete(context.Background(), "invalid_id")

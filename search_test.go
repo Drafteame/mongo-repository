@@ -8,20 +8,15 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_Search(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
-
-	db := d.Client().Database(d.DbName())
-
 	t.Run("success search", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		now := time.Now().UTC()
 
 		dao := testDAO{
@@ -42,6 +37,7 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("empty search", func(t *testing.T) {
+		d := getTestDriver(t)
 		repo := newTestRepository(d)
 
 		opt := NewSearchOptions(newSearchFilters(), NewSearchOrders())
@@ -52,6 +48,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with limit", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		now := time.Now().UTC()
 
 		dao := testDAO{
@@ -72,6 +70,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with offset", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		now := time.Now().UTC()
 
 		dao := testDAO{
@@ -101,6 +101,9 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with sort", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		now := time.Now().UTC()
 
 		dao := testDAO{
@@ -131,6 +134,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with sort desc", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		now := time.Now().UTC()
 
 		dao := testDAO{
@@ -161,6 +166,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success omitting deleted items", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		now := time.Now().UTC()
 		pnow := primitive.NewDateTimeFromTime(now)
 
@@ -192,6 +199,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with projection", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		now := time.Now().UTC()
 		dao := testDAO{
 			Identifier: "identifier",
@@ -233,6 +242,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with inverse projection", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		now := time.Now().UTC()
 		dao := testDAO{
 			Identifier: "identifier",
@@ -274,6 +285,8 @@ func TestRepository_Search(t *testing.T) {
 	})
 
 	t.Run("success search with multi field projection", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
 		oid := primitive.NewObjectID()
 		oid2 := primitive.NewObjectID()
 		now := time.Now().UTC()
