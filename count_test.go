@@ -10,6 +10,8 @@ import (
 )
 
 func TestRepository_Count(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	db := d.Client().Database(d.DbName())

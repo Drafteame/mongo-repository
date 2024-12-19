@@ -12,10 +12,12 @@ import (
 )
 
 func TestRepository_Create(t *testing.T) {
-	c := clock.NewTest(time.Now()).ForceUTC()
+	t.Parallel()
 
 	t.Run("success create", func(t *testing.T) {
+		t.Parallel()
 		d := getTestDriver(t)
+		c := clock.NewTest(time.Now()).ForceUTC()
 
 		expected := testModel{
 			Identifier: "identifier",
@@ -31,7 +33,10 @@ func TestRepository_Create(t *testing.T) {
 	})
 
 	t.Run("success create with no timestamps", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
+		c := clock.NewTest(time.Now()).ForceUTC()
 
 		expected := testModel{
 			Identifier: "identifier",

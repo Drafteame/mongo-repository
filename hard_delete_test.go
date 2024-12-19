@@ -12,7 +12,11 @@ import (
 )
 
 func TestRepository_HardDelete(t *testing.T) {
+	t.Parallel()
+
 	t.Run("success hard delete", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
@@ -43,6 +47,8 @@ func TestRepository_HardDelete(t *testing.T) {
 	})
 
 	t.Run("error hard delete with invalid id", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		repo := newTestRepository(d)
 

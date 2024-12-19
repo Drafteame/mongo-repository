@@ -15,7 +15,11 @@ import (
 )
 
 func TestRepository_Delete(t *testing.T) {
+	t.Parallel()
+
 	t.Run("success delete", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
@@ -49,6 +53,8 @@ func TestRepository_Delete(t *testing.T) {
 	})
 
 	t.Run("success delete with no affected", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
@@ -84,6 +90,8 @@ func TestRepository_Delete(t *testing.T) {
 	})
 
 	t.Run("success delete with no timestamps", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 

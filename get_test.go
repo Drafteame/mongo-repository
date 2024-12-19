@@ -14,7 +14,11 @@ import (
 )
 
 func TestRepository_Get(t *testing.T) {
+	t.Parallel()
+
 	t.Run("get error not found", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
@@ -40,6 +44,8 @@ func TestRepository_Get(t *testing.T) {
 	})
 
 	t.Run("get error not found on deleted doc", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
@@ -66,6 +72,8 @@ func TestRepository_Get(t *testing.T) {
 	})
 
 	t.Run("get success", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 

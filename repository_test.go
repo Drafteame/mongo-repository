@@ -7,6 +7,8 @@ import (
 )
 
 func TestNewRepository(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := NewRepository[
@@ -34,6 +36,8 @@ func TestNewRepository(t *testing.T) {
 }
 
 func TestRepository_SetDefaultSearchLimit(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -48,6 +52,8 @@ func TestRepository_SetDefaultSearchLimit(t *testing.T) {
 }
 
 func TestRepository_SetLogger(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -59,6 +65,8 @@ func TestRepository_SetLogger(t *testing.T) {
 }
 
 func TestRepository_SetUpdatedAtField(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -73,6 +81,8 @@ func TestRepository_SetUpdatedAtField(t *testing.T) {
 }
 
 func TestRepository_SetCreatedAtField(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -87,6 +97,8 @@ func TestRepository_SetCreatedAtField(t *testing.T) {
 }
 
 func TestRepository_SetDeletedAtField(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -101,6 +113,8 @@ func TestRepository_SetDeletedAtField(t *testing.T) {
 }
 
 func TestRepository_WithTimestamps(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -112,6 +126,8 @@ func TestRepository_WithTimestamps(t *testing.T) {
 }
 
 func TestRepository_Db(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -121,6 +137,8 @@ func TestRepository_Db(t *testing.T) {
 }
 
 func TestRepository_Clock(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
@@ -133,6 +151,8 @@ func TestRepository_Clock(t *testing.T) {
 }
 
 func TestRepository_CollectionName(t *testing.T) {
+	t.Parallel()
+
 	d := getTestDriver(t)
 
 	repo := newTestRepository(d)

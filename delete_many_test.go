@@ -15,6 +15,8 @@ import (
 
 func TestRepository_DeleteMany(t *testing.T) {
 	t.Run("success delete many", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
@@ -77,6 +79,8 @@ func TestRepository_DeleteMany(t *testing.T) {
 	})
 
 	t.Run("error delete many with empty filters", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 
 		repo := newTestRepository(d)
@@ -87,6 +91,8 @@ func TestRepository_DeleteMany(t *testing.T) {
 	})
 
 	t.Run("delete many with no timestamps", func(t *testing.T) {
+		t.Parallel()
+
 		d := getTestDriver(t)
 		db := d.Client().Database(d.DbName())
 
