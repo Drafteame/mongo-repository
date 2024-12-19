@@ -9,20 +9,15 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/Drafteame/mgorepo/clock"
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 	ptesting "github.com/Drafteame/mgorepo/internal/testing"
 )
 
 func TestRepository_DeleteMany(t *testing.T) {
-	d, errDriver := driver.NewTest(t)
-	if errDriver != nil {
-		t.Fatal(errDriver)
-	}
-
-	db := d.Client().Database(d.DbName())
-
 	t.Run("success delete many", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		c := clock.NewTest(time.Now()).ForceUTC()
 
 		daos := make([]any, 0, 100)
@@ -82,6 +77,8 @@ func TestRepository_DeleteMany(t *testing.T) {
 	})
 
 	t.Run("error delete many with empty filters", func(t *testing.T) {
+		d := getTestDriver(t)
+
 		repo := newTestRepository(d)
 		_, err := repo.DeleteMany(context.Background(), newSearchFilters())
 
@@ -90,6 +87,9 @@ func TestRepository_DeleteMany(t *testing.T) {
 	})
 
 	t.Run("delete many with no timestamps", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		daos := make([]any, 0, 100)
 		c := clock.NewTest(time.Now()).ForceUTC()
 

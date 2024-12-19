@@ -4,7 +4,7 @@ An extensible and generic mongo repository pattern implementation
 
 ## Requirements
 
-- Golang >= 1.20
+- Golang >= 1.21
 - Docker (for testing only)
 
 ## CLI

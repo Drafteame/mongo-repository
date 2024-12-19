@@ -1,0 +1,9 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mgorepo-mongo-test
+    ports:
+      - "27017:27017" # Expose MongoDB on localhost:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root # Set a root username
+      MONGO_INITDB_ROOT_PASSWORD: root # Set a root password

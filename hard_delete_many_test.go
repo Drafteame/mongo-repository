@@ -7,19 +7,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_HardDeleteMany(t *testing.T) {
-	d, errDriver := driver.NewTest(t)
-	if errDriver != nil {
-		t.Fatal(errDriver)
-	}
-
-	db := d.Client().Database(d.DbName())
-
 	t.Run("success hard delete many", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		daos := make([]any, 0, 100)
 
 		for i := 0; i < 100; i++ {
@@ -60,6 +55,8 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 	})
 
 	t.Run("error hard delete many with empty filters", func(t *testing.T) {
+		d := getTestDriver(t)
+
 		repo := newTestRepository(d)
 
 		deleted, err := repo.HardDeleteMany(context.Background(), newSearchFilters())
@@ -70,6 +67,9 @@ func TestRepository_HardDeleteMany(t *testing.T) {
 	})
 
 	t.Run("no error when filters match 0 documents", func(t *testing.T) {
+		d := getTestDriver(t)
+		db := d.Client().Database(d.DbName())
+
 		daos := make([]any, 0, 100)
 
 		for i := 0; i < 100; i++ {

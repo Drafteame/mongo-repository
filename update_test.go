@@ -15,7 +15,12 @@ import (
 )
 
 func TestRepository_Update(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
+	d, driverErr := driver.NewWithConfig(context.TODO(), driver.Config{
+		URI:            "mongodb://root:root@localhost:27017/test?authSource=admin",
+		ReadPreference: "primary",
+		DBName:         "test",
+	})
+
 	if driverErr != nil {
 		t.Fatal(driverErr)
 	}

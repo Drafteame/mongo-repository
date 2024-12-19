@@ -4,15 +4,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
-	"github.com/Drafteame/mgorepo/driver"
 )
 
 func TestNewRepository(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := NewRepository[
 		testModel,
@@ -39,10 +34,7 @@ func TestNewRepository(t *testing.T) {
 }
 
 func TestRepository_SetDefaultSearchLimit(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -56,10 +48,7 @@ func TestRepository_SetDefaultSearchLimit(t *testing.T) {
 }
 
 func TestRepository_SetLogger(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -70,10 +59,7 @@ func TestRepository_SetLogger(t *testing.T) {
 }
 
 func TestRepository_SetUpdatedAtField(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -87,10 +73,7 @@ func TestRepository_SetUpdatedAtField(t *testing.T) {
 }
 
 func TestRepository_SetCreatedAtField(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -104,10 +87,7 @@ func TestRepository_SetCreatedAtField(t *testing.T) {
 }
 
 func TestRepository_SetDeletedAtField(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -121,10 +101,7 @@ func TestRepository_SetDeletedAtField(t *testing.T) {
 }
 
 func TestRepository_WithTimestamps(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -135,10 +112,7 @@ func TestRepository_WithTimestamps(t *testing.T) {
 }
 
 func TestRepository_Db(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -147,10 +121,7 @@ func TestRepository_Db(t *testing.T) {
 }
 
 func TestRepository_Clock(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 
@@ -162,10 +133,7 @@ func TestRepository_Clock(t *testing.T) {
 }
 
 func TestRepository_CollectionName(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	repo := newTestRepository(d)
 

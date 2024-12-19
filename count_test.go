@@ -6,15 +6,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/Drafteame/mgorepo/driver"
 	"github.com/Drafteame/mgorepo/internal/seed"
 )
 
 func TestRepository_Count(t *testing.T) {
-	d, driverErr := driver.NewTest(t)
-	if driverErr != nil {
-		t.Fatal(driverErr)
-	}
+	d := getTestDriver(t)
 
 	db := d.Client().Database(d.DbName())
 
