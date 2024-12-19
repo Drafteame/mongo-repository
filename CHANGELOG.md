@@ -1,3 +1,48 @@
+## v0.9.0 (2024-12-19)
+
+
+- feat: refactor tests to not use gnomock (#36)
+- * feat: refactor test to not use gnomock
+- * chore: set parallel to all tests
+- * chore: add mongo serice to tests
+- ci: bump goreleaser/goreleaser-action from 5 to 6 (#31)
+- ci: bump github.com/fatih/color from 1.16.0 to 1.17.0 (#29)
+- Bumps [github.com/fatih/color](https://github.com/fatih/color) from 1.16.0 to 1.17.0.
+- [Release notes](https://github.com/fatih/color/releases)
+- [Commits](https://github.com/fatih/color/compare/v1.16.0...v1.17.0)
+- ---
+updated-dependencies:
+- dependency-name: github.com/fatih/color
+  dependency-type: direct:production
+  update-type: version-update:semver-minor
+...
+- Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+- ci: bump actions/setup-go from 4 to 5 (#26)
+- Bumps [actions/setup-go](https://github.com/actions/setup-go) from 4 to 5.
+- [Release notes](https://github.com/actions/setup-go/releases)
+- [Commits](https://github.com/actions/setup-go/compare/v4...v5)
+- ---
+updated-dependencies:
+- dependency-name: actions/setup-go
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
+- Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+- ci: bump actions/setup-python from 4 to 5 (#25)
+- Bumps [actions/setup-python](https://github.com/actions/setup-python) from 4 to 5.
+- [Release notes](https://github.com/actions/setup-python/releases)
+- [Commits](https://github.com/actions/setup-python/compare/v4...v5)
+- ---
+updated-dependencies:
+- dependency-name: actions/setup-python
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
+- Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
 ## v0.8.0 (2024-07-25)
 
 
